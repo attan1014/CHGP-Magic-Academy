@@ -87,9 +87,24 @@
         #pet1-container { left: 180px; bottom: 30px; transform: scale(0.65); z-index: 8;}
         #pet2-container { left: 280px; bottom: 60px; transform: scale(0.55); z-index: 5;}
         #enemy-container { right: 80px; z-index: 10; bottom: 60px;}
-        .equip-layer { position: absolute; font-size: 70px; pointer-events: none; z-index: 15; animation: bounceIdle 2s infinite ease-in-out; }
-        #vis-hat { top: -50px; left: 10px; }
-        #vis-weapon { right: -50px; top: 10px; transform: rotate(15deg); }
+
+        /* --- FIXED EQUIPMENT SIZE AND POSITION --- */
+        .equip-layer { 
+            position: absolute; 
+            font-size: 50px;        /* smaller than before */
+            pointer-events: none; 
+            z-index: 15; 
+            animation: bounceIdle 2s infinite ease-in-out; 
+        }
+        #vis-hat { 
+            top: -45px; 
+            left: 5px; 
+        }
+        #vis-weapon { 
+            right: -30px; 
+            top: 5px; 
+            transform: rotate(15deg); 
+        }
 
         .action-menu { height: 110px; background: #FFF; border-top: 6px solid #DFE4EA; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 0 20px; }
         .spell-btn { font-size: 18px; padding: 12px 20px; border-radius: 15px; display: flex; align-items: center; gap: 5px; }
@@ -1293,7 +1308,22 @@
         }
         
         problemStartTime = Date.now(); 
-        setTimeout(() => document.getElementById('ans').focus(), 100);
+        
+        // Setup Enter key handler for the new input
+        const ansInput = document.getElementById('ans');
+        if (ansInput) {
+            ansInput.removeEventListener('keydown', mathEnterHandler);
+            ansInput.addEventListener('keydown', mathEnterHandler);
+            setTimeout(() => ansInput.focus(), 100);
+        }
+    }
+
+    // Enter key handler for math modal
+    function mathEnterHandler(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            submitMath();
+        }
     }
 
     function submitMath() {
@@ -1961,6 +1991,24 @@
             grid.appendChild(card);
         });
     }
+
+    // --- KEYBOARD CONTROLS ---
+    // Move player with arrow keys
+    document.addEventListener('keydown', function(e) {
+        const overworld = document.getElementById('overworld-screen');
+        if (!overworld.classList.contains('hidden') && 
+            document.querySelectorAll('.modal-overlay:not(.hidden)').length === 0) {
+            const key = e.key;
+            // Prevent page scrolling
+            if (key.startsWith('Arrow')) e.preventDefault();
+            switch(key) {
+                case 'ArrowUp': movePlayer(0, -1); break;
+                case 'ArrowDown': movePlayer(0, 1); break;
+                case 'ArrowLeft': movePlayer(-1, 0); break;
+                case 'ArrowRight': movePlayer(1, 0); break;
+            }
+        }
+    });
 
     window.onload = function() {
         checkSaveFile();
