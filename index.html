@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CHGP Magic Academy - Kid Friendly</title>
+    <title>CHGP Magic Academy - Epic Battle Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Fredoka+One&display=swap');
         
@@ -17,10 +17,11 @@
         
         body { margin: 0; background: #87CEEB; font-family: 'Baloo 2', cursive; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; user-select: none; }
         
-        #game-window { width: 1100px; height: 700px; background: #fff; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.3), inset 0 0 0 8px rgba(255,255,255,0.5); position: relative; overflow: hidden; border: 6px solid #4B7BEC; transform-origin: center center; }
+        #game-window { width: 900px; height: 600px; background: #fff; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.3), inset 0 0 0 8px rgba(255,255,255,0.5); position: relative; overflow: hidden; border: 6px solid #4B7BEC; transform-origin: center center; }
         .screen { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; flex-direction: column; transition: opacity 0.3s ease; background-color: #87CEEB; }
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
 
+        /* Image styles with proper sizing */
         .monster-img { max-width: 100%; max-height: 180px; object-fit: contain; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4)); }
         .boss-img { max-height: 260px; }
         .menu-monster-img { max-height: 70px; object-fit: contain; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); }
@@ -28,16 +29,13 @@
         .radiant { filter: hue-rotate(90deg) brightness(1.2) sepia(0.5) drop-shadow(0 0 15px var(--gold)) !important; animation: pulseGlow 2s infinite; }
         @keyframes pulseGlow { 0%, 100% { filter: hue-rotate(90deg) brightness(1.2) sepia(0.5) drop-shadow(0 0 10px var(--gold)); } 50% { filter: hue-rotate(90deg) brightness(1.5) sepia(0.5) drop-shadow(0 0 25px var(--gold)); } }
 
-        button { font-family: 'Fredoka One', cursive; cursor: pointer; outline: none; transition: all 0.1s ease; text-transform: uppercase; letter-spacing: 1px; border-radius: 50px; min-height: 44px; min-width: 44px; }
+        button { font-family: 'Fredoka One', cursive; cursor: pointer; outline: none; transition: all 0.1s ease; text-transform: uppercase; letter-spacing: 1px; border-radius: 50px; }
         button:active { transform: translateY(6px) !important; box-shadow: 0 0px 0 transparent !important; }
         .btn-primary { background: var(--btn-blue); color: white; border: 4px solid #fff; padding: 15px 30px; font-size: 22px; box-shadow: 0 8px 0 var(--btn-blue-shadow); text-shadow: 2px 2px 0 rgba(0,0,0,0.2); }
         .btn-green { background: var(--btn-green); box-shadow: 0 8px 0 var(--btn-green-shadow); }
         .btn-red { background: var(--btn-red); box-shadow: 0 8px 0 var(--btn-red-shadow); }
         .btn-gold { background: var(--gold); color: #8A611C; border-color: #FFF; box-shadow: 0 8px 0 var(--gold-shadow); text-shadow: none; }
         .btn-boss { background: #8e44ad; box-shadow: 0 8px 0 #6c3483; }
-        .btn-arena { background: #e67e22; box-shadow: 0 8px 0 #d35400; }
-        .btn-craft { background: #1abc9c; box-shadow: 0 8px 0 #16a085; }
-        .btn-breed { background: #9b59b6; box-shadow: 0 8px 0 #8e44ad; }
 
         #start-screen { background: radial-gradient(circle at top, #A3CB38, #009432); align-items: center; justify-content: center; text-align: center; z-index: 20; }
         h1 { font-family: 'Fredoka One', cursive; font-size: 55px; color: #FFF; margin-bottom: 10px; text-shadow: 4px 4px 0 #4B7BEC, 8px 8px 0 rgba(0,0,0,0.2); animation: float 3s ease-in-out infinite; }
@@ -55,11 +53,13 @@
         .del-btn:hover { background: #ff767d; }
 
         #hub-screen { background: linear-gradient(to bottom, #87CEEB 40%, #A3CB38 40%, #009432 100%); align-items: center; justify-content: center; text-align: center; }
-        .hub-menu { background: var(--panel-bg); padding: 30px; border-radius: 30px; border: 6px solid #FFF; box-shadow: 0 15px 30px rgba(0,0,0,0.2); width: 800px; }
+        .hub-menu { background: var(--panel-bg); padding: 30px; border-radius: 30px; border: 6px solid #FFF; box-shadow: 0 15px 30px rgba(0,0,0,0.2); width: 650px; }
 
+        /* Background images for biomes */
         #overworld-screen { position: relative; transition: background 0.5s; background-size: cover; background-position: center; }
-        #map-area { width: 100%; height: 500px; position: relative; overflow: hidden; border-bottom: 6px solid rgba(0,0,0,0.2); }
+        #map-area { width: 100%; height: 420px; position: relative; overflow: hidden; border-bottom: 6px solid rgba(0,0,0,0.2); }
         
+        /* Walking animation for map player */
         #map-player { 
             position: absolute; 
             font-size: 70px; 
@@ -92,7 +92,7 @@
         
         .d-pad-container { height: 180px; background: #FFF; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
         .d-pad { display: grid; grid-template-columns: 60px 60px 60px; grid-template-rows: 60px 60px; gap: 5px; }
-        .d-btn { background: var(--btn-blue); color: white; font-size: 30px; border-radius: 15px; border: 4px solid #FFF; box-shadow: 0 6px 0 var(--btn-blue-shadow); display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; min-height: 60px; min-width: 60px; }
+        .d-btn { background: var(--btn-blue); color: white; font-size: 30px; border-radius: 15px; border: 4px solid #FFF; box-shadow: 0 6px 0 var(--btn-blue-shadow); display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; }
         .d-btn:active { transform: translateY(4px) !important; box-shadow: 0 2px 0 var(--btn-blue-shadow) !important; }
         .d-btn.disabled { opacity: 0.5; pointer-events: none; }
         #btn-up { grid-column: 2; grid-row: 1; }
@@ -100,7 +100,7 @@
         #btn-down { grid-column: 2; grid-row: 2; }
         #btn-right { grid-column: 3; grid-row: 2; }
 
-        #battle-screen, #arena-screen { background: linear-gradient(to bottom, #87CEFA 0%, #87CEFA 50%, #7BED9F 50%, #2ED573 100%); transition: background 0.5s; background-size: cover; background-position: center; }
+        #battle-screen { background: linear-gradient(to bottom, #87CEFA 0%, #87CEFA 50%, #7BED9F 50%, #2ED573 100%); transition: background 0.5s; background-size: cover; background-position: center; }
         .hud { display: flex; justify-content: space-between; padding: 15px; background: rgba(255,255,255,0.4); border-bottom: 4px solid rgba(255,255,255,0.6); }
         .hud-panel { background: #FFF; padding: 10px 20px; border-radius: 20px; border: 4px solid #DFE4EA; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; }
         .name-tag { font-family: 'Fredoka One'; font-size: 18px; color: var(--text-dark); margin-bottom: 5px; }
@@ -112,24 +112,27 @@
         .character-container { position: absolute; bottom: 40px; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
         .sprite-inner { animation: bounceIdle 2s infinite ease-in-out; display: flex; align-items: flex-end; justify-content: center; height: 220px;}
         
-        #player-sprite, #arena-player-sprite { height: 100%; display: flex; align-items: center; justify-content: center; }
-        #player-sprite img, #arena-player-sprite img { 
+        /* FIXED: Player sprite facing RIGHT (toward enemy) and EVEN LARGER */
+        #player-sprite { height: 100%; display: flex; align-items: center; justify-content: center; }
+        #player-sprite img { 
             max-height: 200px; 
             max-width: 200px; 
             object-fit: contain; 
-            transform: scaleX(1);
+            transform: scaleX(1); /* Face RIGHT toward enemy */
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
         }
         
-        #enemy-sprite img, #arena-enemy-sprite img { 
+        /* FIXED: Enemy sprite facing LEFT and EVEN LARGER */
+        #enemy-sprite img { 
             max-height: 250px; 
             max-width: 250px; 
             object-fit: contain; 
-            transform: scaleX(-1);
+            transform: scaleX(-1); /* Face LEFT toward player */
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
         }
         
-        #pet1-sprite img, #pet2-sprite img, #arena-pet1-sprite img, #arena-pet2-sprite img { 
+        /* Pet sprites - larger */
+        #pet1-sprite img, #pet2-sprite img { 
             max-height: 150px; 
             max-width: 150px; 
             object-fit: contain; 
@@ -138,11 +141,13 @@
         
         @keyframes bounceIdle { 0%, 100% { transform: scaleY(1) translateY(0); } 50% { transform: scaleY(0.95) translateY(5px); } }
         
-        #player-container, #arena-player-container { left: 30px; z-index: 10; bottom: 30px; }
-        #pet1-container, #arena-pet1-container { left: 220px; bottom: 20px; transform: scale(0.9); z-index: 8; }
-        #pet2-container, #arena-pet2-container { left: 360px; bottom: 40px; transform: scale(0.8); z-index: 5; }
-        #enemy-container, #arena-enemy-container { right: 30px; z-index: 10; bottom: 40px; }
+        /* Repositioned for larger sprites with no overlap */
+        #player-container { left: 30px; z-index: 10; bottom: 30px; }
+        #pet1-container { left: 220px; bottom: 20px; transform: scale(0.9); z-index: 8; }
+        #pet2-container { left: 360px; bottom: 40px; transform: scale(0.8); z-index: 5; }
+        #enemy-container { right: 30px; z-index: 10; bottom: 40px; }
 
+        /* FIXED: Equipment positioning - no overlap with larger sprites */
         .equip-layer { 
             position: absolute; 
             font-size: 50px;
@@ -151,10 +156,17 @@
             animation: bounceIdle 2s infinite ease-in-out; 
             filter: drop-shadow(0 8px 8px rgba(0,0,0,0.3));
         }
-        #vis-hat, #arena-vis-hat { top: -70px; left: 20px; }
-        #vis-weapon, #arena-vis-weapon { right: -30px; top: 20px; transform: rotate(15deg); }
+        #vis-hat { 
+            top: -70px; 
+            left: 20px; 
+        }
+        #vis-weapon { 
+            right: -30px; 
+            top: 20px; 
+            transform: rotate(15deg); 
+        }
 
-        .action-menu { height: 110px; background: #FFF; border-top: 6px solid #DFE4EA; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 0 20px; flex-wrap: wrap; }
+        .action-menu { height: 110px; background: #FFF; border-top: 6px solid #DFE4EA; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 0 20px; }
         .spell-btn { font-size: 18px; padding: 12px 20px; border-radius: 15px; display: flex; align-items: center; gap: 5px; }
         .catch-btn { display: none; }
         .catch-btn.glow { display: flex; animation: pulseGold 1.5s infinite; background: var(--gold); color: #8A611C; border-color: #FFF; box-shadow: 0 6px 0 var(--gold-shadow); }
@@ -180,6 +192,7 @@
         .inv-item-row { display: flex; align-items: center; background: #FFF; border: 3px solid #DFE4EA; border-radius: 10px; margin-bottom: 10px; padding: 5px 10px; transition: 0.2s; text-align: left; }
         .inv-item-row.equipped { border-color: var(--btn-green); background: #E6FFF0; }
 
+        /* ENHANCED: Battle animations */
         .dmg-text { 
             position: absolute; 
             font-size: 60px; 
@@ -249,6 +262,7 @@
             100% { opacity: 0; transform: translateY(-120px) scale(1.2); } 
         }
         
+        /* ENHANCED: Attack animations */
         .attack-anim { 
             animation: dashAttack 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             filter: brightness(1.5) drop-shadow(0 0 20px yellow);
@@ -285,6 +299,7 @@
             75% { transform: translate(15px, -10px) rotate(5deg); } 
         }
 
+        /* ENHANCED: Magic projectile */
         .magic-projectile { 
             position: absolute; 
             font-size: 80px; 
@@ -293,42 +308,12 @@
             transition: left 0.4s ease-out, top 0.2s; 
             animation: spinGlow 0.4s infinite;
         }
-        .magic-projectile.fire { color: #ff7f50; filter: drop-shadow(0 0 20px red); animation: flameFlicker 0.2s infinite; }
-        .magic-projectile.water { color: #74b9ff; filter: drop-shadow(0 0 20px blue); animation: waveFloat 0.3s infinite; }
-        .magic-projectile.earth { color: #27ae60; filter: drop-shadow(0 0 20px green); animation: rockSpin 0.5s infinite; }
-        .magic-projectile.air { color: #a29bfe; filter: drop-shadow(0 0 20px purple); animation: gust 0.2s infinite; }
-        .magic-projectile.electric { color: #f1c40f; filter: drop-shadow(0 0 20px yellow); animation: zap 0.1s infinite; }
-        .magic-projectile.ice { color: #74b9ff; filter: drop-shadow(0 0 20px cyan); animation: iceShard 0.3s infinite; }
-        @keyframes flameFlicker { 0% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        @keyframes waveFloat { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes rockSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes gust { 0% { transform: translateX(0); } 50% { transform: translateX(5px); } }
-        @keyframes zap { 0% { opacity: 1; } 50% { opacity: 0.5; } }
-        @keyframes iceShard { 0% { transform: scale(1); } 50% { transform: scale(0.8); } }
-
-        .evo-glow {
-            animation: evolutionGlow 1s ease-in-out;
+        @keyframes spinGlow {
+            0% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 10px gold); }
+            50% { transform: rotate(10deg) scale(1.2); filter: drop-shadow(0 0 30px orange); }
+            100% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 10px gold); }
         }
-        @keyframes evolutionGlow {
-            0% { filter: brightness(1) drop-shadow(0 0 0 gold); }
-            50% { filter: brightness(2) drop-shadow(0 0 30px gold); transform: scale(1.2); }
-            100% { filter: brightness(1) drop-shadow(0 0 0 gold); }
-        }
-
-        .radiant-sparkle::after {
-            content: '✨';
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            font-size: 30px;
-            animation: sparkle 1s infinite;
-        }
-        @keyframes sparkle {
-            0% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.3); }
-            100% { opacity: 0.5; transform: scale(1); }
-        }
-
+        
         #flash-overlay { 
             position: absolute; 
             top: 0; 
@@ -360,10 +345,9 @@
             display: none; 
         }
         
+        /* Pokedex styles */
         .pokedex-grid { grid-template-columns: repeat(3, 1fr); max-height: 400px; }
         .biome-tag { font-size: 12px; background: #e2e3e5; padding: 2px 5px; border-radius: 5px; margin: 2px; display: inline-block; }
-
-        .leaderboard-entry { display: flex; justify-content: space-between; padding: 5px 10px; background: #ecf0f1; border-radius: 10px; margin: 5px 0; }
     </style>
 </head>
 <body>
@@ -436,7 +420,7 @@
                     <h1 style="font-size: 35px; margin: 0; text-align: left; color: var(--text-dark);" data-en="🏰 Academy Hub" data-ko="🏰 학교 메인">🏰 Academy Hub</h1>
                     <p style="font-size: 22px; color: var(--text-dark); font-weight: bold; margin: 5px 0; text-align: left;">
                         <span data-en="Wizard" data-ko="마법사">Wizard</span> <span id="hub-name" style="color: var(--btn-blue);">AndyT</span> <br>
-                        <span data-en="⭐ Level" data-ko="⭐ 레벨">⭐ Level</span> <span id="hub-lvl">21</span>/250
+                        <span data-en="⭐ Level" data-ko="⭐ 레벨">⭐ Level</span> <span id="hub-lvl">35</span>/250
                     </p>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 5px;">
@@ -454,10 +438,6 @@
                 
                 <button class="btn-primary btn-green" onclick="openSetupModal('dojo')" data-en="🎯 Dojo" data-ko="🎯 훈련장">🎯 Dojo</button>
                 <button class="btn-primary btn-boss" onclick="openBossSelect()" data-en="👹 Tower" data-ko="👹 보스 탑">👹 Tower</button>
-                <button class="btn-primary btn-arena" onclick="openArenaSetup()" data-en="⚔️ Arena" data-ko="⚔️ 아레나">⚔️ Arena</button>
-                
-                <button class="btn-primary btn-craft" onclick="openCrafting()" data-en="🔨 Craft" data-ko="🔨 제작">🔨 Craft</button>
-                <button class="btn-primary btn-breed" onclick="openBreeding()" data-en="🧬 Breed" data-ko="🧬 교배">🧬 Breed</button>
                 <button class="btn-primary" style="background: #1abc9c; box-shadow: 0 6px 0 #16a085;" onclick="openMenu('shop')" data-en="🏪 Shop" data-ko="🏪 상점">🏪 Shop</button>
                 
                 <button class="btn-primary" style="background: #e67e22; box-shadow: 0 6px 0 #d35400;" onclick="openMenu('pets')" data-en="🐾 Pets" data-ko="🐾 펫">🐾 Pets</button>
@@ -490,7 +470,7 @@
         </div>
     </div>
 
-    <!-- Overworld Screen -->
+    <!-- Overworld Screen - with walking animation -->
     <div id="overworld-screen" class="screen hidden">
         <div id="biome-banner">Whispering Woods</div>
         <div id="map-area">
@@ -512,7 +492,7 @@
         </div>
     </div>
 
-    <!-- Battle Screen -->
+    <!-- Battle Screen - ENHANCED: Player faces right, epic animations -->
     <div id="battle-screen" class="screen hidden">
         <div class="hud">
             <div class="hud-panel">
@@ -522,18 +502,19 @@
             </div>
             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <button class="btn-primary btn-red" style="padding: 8px 15px; font-size: 14px;" onclick="fleeBattle()" data-en="🏃 Run Away" data-ko="🏃 도망치기">🏃 Run Away</button>
-                <div style="font-size: 12px; margin-top: 5px; font-weight: bold; color: white; text-shadow: 1px 1px 0 black;" id="boss-warning"></div>
+                <div style="font-size: 12px; margin-top: 5px; font-weight: bold; color: white; text-shadow: 1px 1px 0 black;" id="boss-warning">⚠️ THICK ARMOR: Bosses take -50% Damage! ⚠️</div>
             </div>
             <div class="hud-panel">
-                <div class="name-tag" id="hud-enemy-name">Twiggy</div>
+                <div class="name-tag" id="hud-enemy-name">Pebble</div>
                 <div class="hp-bar-bg"><div id="enemy-hp-fill" class="hp-bar-fill enemy-hp-fill" style="width:100%"></div></div>
                 <div style="font-size: 14px; margin-top: 5px; font-weight: 800; color: #7F8FA6;">
-                    <span data-en="TYPE:" data-ko="속성:">TYPE:</span> <span id="e-element-text">🍃 Earth</span>
+                    <span data-en="TYPE:" data-ko="속성:">TYPE:</span> <span id="e-element-text">🗿 Earth</span>
                 </div>
             </div>
         </div>
 
         <div class="battle-stage" id="stage">
+            <!-- Player - faces RIGHT (toward enemy) -->
             <div id="player-container" class="character-container">
                 <div id="player-sprite" class="sprite-inner">
                     <img src="images/characters/water_boy.png" style="max-height: 200px; max-width: 200px; object-fit: contain; transform: scaleX(1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙‍♂️'">
@@ -542,12 +523,18 @@
                 <div id="vis-weapon" class="equip-layer"></div>
             </div>
             
-            <div id="pet1-container" class="character-container hidden"><div id="pet1-sprite" class="sprite-inner"></div></div>
-            <div id="pet2-container" class="character-container hidden"><div id="pet2-sprite" class="sprite-inner"></div></div>
+            <!-- Pets -->
+            <div id="pet1-container" class="character-container hidden">
+                <div id="pet1-sprite" class="sprite-inner"></div>
+            </div>
+            <div id="pet2-container" class="character-container hidden">
+                <div id="pet2-sprite" class="sprite-inner"></div>
+            </div>
             
+            <!-- Enemy - faces LEFT (toward player) -->
             <div id="enemy-container" class="character-container">
                 <div id="enemy-sprite" class="sprite-inner">
-                    <img src="images/monsters_ready/twiggy.png" style="max-height: 250px; max-width: 250px; object-fit: contain; transform: scaleX(-1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🌿'">
+                    <img src="images/monsters_ready/pebble.png" style="max-height: 250px; max-width: 250px; object-fit: contain; transform: scaleX(-1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🪨'">
                 </div>
                 <div id="element-adv" class="adv-text"></div>
             </div>
@@ -614,115 +601,6 @@
         </div>
     </div>
 
-    <!-- Arena Setup Modal -->
-    <div id="arena-setup-modal" class="modal-overlay hidden">
-        <div class="modal-box" style="width: 600px;">
-            <h2 style="font-family: 'Fredoka One'; font-size: 35px; color: var(--text-dark); margin: 0 0 10px 0;" data-en="⚔️ Arena Battle" data-ko="⚔️ 아레나 배틀">⚔️ Arena Battle</h2>
-            <p style="font-size: 18px; color: #7F8FA6;" data-en="Choose your math type for this arena fight!" data-ko="이 아레나 전투에서 사용할 수학 종류를 선택하세요!">Choose your math type for this arena fight!</p>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;">
-                <button id="arena-math-add" class="btn-primary" onclick="setArenaMath('addition')" data-en="➕ Addition" data-ko="➕ 더하기">➕ Addition</button>
-                <button id="arena-math-sub" class="btn-primary btn-red" onclick="setArenaMath('subtraction')" data-en="➖ Subtraction" data-ko="➖ 빼기">➖ Subtraction</button>
-                <button id="arena-math-mul" class="btn-primary" style="background: #9b59b6;" onclick="setArenaMath('multiplication')" data-en="✖️ Multiplication" data-ko="✖️ 곱하기">✖️ Multiplication</button>
-                <button id="arena-math-div" class="btn-primary" style="background: #e67e22;" onclick="setArenaMath('division')" data-en="➗ Division" data-ko="➗ 나누기">➗ Division</button>
-            </div>
-            
-            <div style="display: flex; gap: 15px; margin-top: 15px;">
-                <button class="btn-primary btn-red" style="flex: 1; font-size: 20px; padding: 10px;" onclick="closeArenaSetup()" data-en="Cancel" data-ko="취소">Cancel</button>
-                <button class="btn-primary btn-gold" style="flex: 2; color: #8A611C; border-color: white; font-size: 20px; padding: 10px;" onclick="startArenaBattle()" data-en="Start Arena Fight!" data-ko="아레나 시작!">Start Arena Fight!</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Arena Battle Screen -->
-    <div id="arena-screen" class="screen hidden">
-        <div class="hud">
-            <div class="hud-panel">
-                <div class="name-tag" id="arena-player-name">AndyT</div>
-                <div class="hp-bar-bg"><div id="arena-player-hp-fill" class="hp-bar-fill" style="width:100%"></div></div>
-                <div style="font-size: 14px; margin-top: 5px; font-weight: 800; color: #7F8FA6;">HP: <span id="arena-p-hp-text">1270/1270</span> | PWR: <span id="arena-p-power-text">635</span></div>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <button class="btn-primary btn-red" style="padding: 8px 15px; font-size: 14px;" onclick="fleeArena()" data-en="🏃 Surrender" data-ko="🏃 항복">🏃 Surrender</button>
-                <div style="font-size: 12px; margin-top: 5px; font-weight: bold; color: white; text-shadow: 1px 1px 0 black;" id="arena-warning"></div>
-            </div>
-            <div class="hud-panel">
-                <div class="name-tag" id="arena-enemy-name">Mage Opponent</div>
-                <div class="hp-bar-bg"><div id="arena-enemy-hp-fill" class="hp-bar-fill enemy-hp-fill" style="width:100%"></div></div>
-                <div style="font-size: 14px; margin-top: 5px; font-weight: 800; color: #7F8FA6;">
-                    <span data-en="TYPE:" data-ko="속성:">TYPE:</span> <span id="arena-e-element-text">Earth</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="battle-stage" id="arena-stage">
-            <div id="arena-player-container" class="character-container">
-                <div id="arena-player-sprite" class="sprite-inner">
-                    <img src="images/characters/water_boy.png" style="max-height: 200px; max-width: 200px; object-fit: contain; transform: scaleX(1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙‍♂️'">
-                </div>
-                <div id="arena-vis-hat" class="equip-layer"></div>
-                <div id="arena-vis-weapon" class="equip-layer"></div>
-            </div>
-            
-            <div id="arena-pet1-container" class="character-container hidden"><div id="arena-pet1-sprite" class="sprite-inner"></div></div>
-            <div id="arena-pet2-container" class="character-container hidden"><div id="arena-pet2-sprite" class="sprite-inner"></div></div>
-            
-            <div id="arena-enemy-container" class="character-container">
-                <div id="arena-enemy-sprite" class="sprite-inner">
-                    <img src="images/characters/fire_boy.png" style="max-height: 200px; max-width: 200px; object-fit: contain; transform: scaleX(-1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙'">
-                </div>
-                <div id="arena-element-adv" class="adv-text"></div>
-            </div>
-        </div>
-
-        <div class="action-menu">
-            <button class="btn-primary spell-btn" style="background: #9b59b6; box-shadow: 0 6px 0 #8e44ad; border-color: transparent;" onclick="openEquipModal()" data-en="🎒 Equip" data-ko="🎒 장착">🎒 Equip</button>
-            <div id="arena-spell-btn-container" style="flex-grow: 1; display: flex; justify-content: center;"></div>
-            <button class="btn-primary spell-btn" style="background: #A4B0BE; box-shadow: 0 6px 0 #747D8C; border-color: transparent;" onclick="openMenu('pets')" data-en="🐾 Pets" data-ko="🐾 펫">🐾 Pets</button>
-        </div>
-    </div>
-
-    <!-- Crafting Modal -->
-    <div id="crafting-modal" class="modal-overlay hidden">
-        <div class="modal-box" style="width: 700px;">
-            <h2 style="font-family: 'Fredoka One'; font-size: 35px; color: var(--text-dark); margin: 0 0 10px 0;" data-en="🔨 Crafting Station" data-ko="🔨 제작소">🔨 Crafting Station</h2>
-            <p data-en="Combine two items to create a new one!" data-ko="두 아이템을 결합하여 새 아이템을 만드세요!">Combine two items to create a new one!</p>
-            <div id="crafting-inventory" style="max-height: 200px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 10px;"></div>
-            <div id="crafting-slots" style="display: flex; gap: 20px; justify-content: center; margin: 20px 0;">
-                <div id="craft-slot-1" class="equip-slot" onclick="selectCraftSlot(1)">❓</div>
-                <div style="font-size: 50px;">+</div>
-                <div id="craft-slot-2" class="equip-slot" onclick="selectCraftSlot(2)">❓</div>
-                <div style="font-size: 50px;">=</div>
-                <div id="craft-result" class="equip-slot" style="border-color: var(--gold);">❓</div>
-            </div>
-            <button class="btn-primary btn-gold" onclick="craftItems()" data-en="CRAFT!" data-ko="제작!">CRAFT!</button>
-            <button class="btn-primary btn-red" style="margin-top: 15px;" onclick="closeCrafting()" data-en="Close" data-ko="닫기">Close</button>
-        </div>
-    </div>
-
-    <!-- Breeding Modal -->
-    <div id="breeding-modal" class="modal-overlay hidden">
-        <div class="modal-box" style="width: 700px;">
-            <h2 style="font-family: 'Fredoka One'; font-size: 35px; color: var(--text-dark); margin: 0 0 10px 0;" data-en="🧬 Breeding Ground" data-ko="🧬 교배장">🧬 Breeding Ground</h2>
-            <p data-en="Select two pets to create a hybrid!" data-ko="두 펫을 선택하여 하이브리드를 만드세요!">Select two pets to create a hybrid!</p>
-            <div id="breeding-pet-list" class="grid" style="max-height: 200px; overflow-y: auto;"></div>
-            <div style="margin: 15px 0;">
-                <span data-en="Selected: " data-ko="선택됨: ">Selected: </span><span id="breeding-selected">None</span>
-            </div>
-            <button class="btn-primary btn-breed" onclick="breedPets()" data-en="BREED!" data-ko="교배!">BREED!</button>
-            <button class="btn-primary btn-red" style="margin-top: 15px;" onclick="closeBreeding()" data-en="Close" data-ko="닫기">Close</button>
-        </div>
-    </div>
-
-    <!-- Leaderboard Modal -->
-    <div id="leaderboard-modal" class="modal-overlay hidden">
-        <div class="modal-box">
-            <h2 style="font-family: 'Fredoka One'; font-size: 35px; color: var(--text-dark); margin: 0 0 10px 0;" data-en="🏆 Arena Leaderboard" data-ko="🏆 아레나 순위표">🏆 Arena Leaderboard</h2>
-            <div id="leaderboard-list"></div>
-            <button class="btn-primary btn-red" style="margin-top: 15px;" onclick="closeLeaderboard()" data-en="Close" data-ko="닫기">Close</button>
-        </div>
-    </div>
-
     <!-- Boss Select Modal -->
     <div id="boss-select-modal" class="modal-overlay hidden">
         <div class="modal-box" style="width: 600px;">
@@ -758,7 +636,7 @@
                         <div id="eq-slot-weapon" class="equip-slot" style="position: absolute; right: -60px; top: 45px; z-index: 2;">🪄</div>
                     </div>
                     <div style="margin-top: auto; padding-top: 20px; font-family: 'Fredoka One'; font-size: 20px; color: var(--gold);">
-                        <span data-en="⭐ Level" data-ko="⭐ 레벨">⭐ Level</span> <span id="eq-lvl">21</span>/250
+                        <span data-en="⭐ Level" data-ko="⭐ 레벨">⭐ Level</span> <span id="eq-lvl">35</span>/250
                     </div>
                 </div>
                 <div style="flex: 1.2; background: #FFF; padding: 15px; border-radius: 20px; border: 4px solid #DFE4EA; max-height: 350px; overflow-y: auto;" id="eq-inventory-list"></div>
@@ -814,7 +692,7 @@
             <h2 style="font-family: 'Fredoka One'; font-size: 40px; color: var(--gold); margin: 0; text-shadow: 2px 2px 0 #8A611C;" data-en="🌟 EVOLUTION! 🌟" data-ko="🌟 진화! 🌟">🌟 EVOLUTION! 🌟</h2>
             <div id="evo-text" style="font-size: 24px; color: var(--text-dark); margin: 20px 0; font-weight: bold;">Your pet is evolving...</div>
             <div style="margin: 20px 0; display: flex; justify-content: center; gap: 30px; align-items: center;">
-                <span id="evo-old" class="evo-glow"></span> <span style="font-size: 50px;">➡️</span> <span id="evo-new" class="evo-glow"></span>
+                <span id="evo-old"></span> <span style="font-size: 50px;">➡️</span> <span id="evo-new"></span>
             </div>
             <button class="btn-primary btn-gold" style="font-size: 26px; padding: 15px 50px;" onclick="closeEvoModal()" data-en="AWESOME!" data-ko="멋져요!">AWESOME!</button>
         </div>
@@ -822,8 +700,63 @@
 </div>
 
 <script>
-    // ========== GLOBAL VARIABLES ==========
+    // --- RESPONSIVE SCALING ---
+    function resizeGame() {
+        const gameWindow = document.getElementById('game-window');
+        const scale = Math.min((window.innerWidth - 20) / 900, (window.innerHeight - 20) / 600);
+        gameWindow.style.transform = `scale(${scale})`;
+    }
+    window.addEventListener('resize', resizeGame);
+    window.addEventListener('orientationchange', resizeGame);
+    resizeGame();
+
+    // --- LANGUAGE SYSTEM ---
     let currentLang = 'en';
+    
+    function toggleLanguage() {
+        currentLang = currentLang === 'en' ? 'ko' : 'en';
+        document.getElementById('lang-btn').innerText = currentLang === 'en' ? '🇰🇷 한국어' : '🇺🇸 English';
+        
+        document.querySelectorAll('[data-en]').forEach(el => {
+            if (el.getAttribute('data-' + currentLang)) {
+                el.innerHTML = el.getAttribute('data-' + currentLang);
+            }
+        });
+        
+        document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+            if (el.getAttribute('data-placeholder-' + currentLang)) {
+                el.placeholder = el.getAttribute('data-placeholder-' + currentLang);
+            }
+        });
+        
+        if (!document.getElementById('hub-screen').classList.contains('hidden')) {
+            goHub();
+        }
+        if (!document.getElementById('battle-screen').classList.contains('hidden')) {
+            updateBattleUI();
+        }
+    }
+
+    function t(en, ko) {
+        return currentLang === 'ko' ? ko : en;
+    }
+
+    function translateEl(elName) {
+        const dict = { 'Water': '물', 'Fire': '불', 'Earth': '땅', 'Air': '바람', 'Electric': '전기', 'Ice': '얼음' };
+        return currentLang === 'ko' ? (dict[elName] || elName) : elName;
+    }
+
+    // --- MESSAGE SYSTEM ---
+    function showGameMessage(text) {
+        document.getElementById('msg-text').innerText = text;
+        document.getElementById('msg-modal').classList.remove('hidden');
+    }
+    
+    function closeGameMessage() {
+        document.getElementById('msg-modal').classList.add('hidden');
+    }
+
+    // --- PLAYER STATE ---
     let player = { 
         name: "AndyT", 
         avatar: "images/characters/water_boy.png", 
@@ -833,13 +766,13 @@
         maxHp: 1270, 
         basePower: 400, 
         power: 635, 
-        level: 21, 
+        level: 35, 
         xp: 0, 
         sp: 34, 
         coins: 1270, 
         berries: 44, 
         mathStreak: 0, 
-        stats: { mathSolved: 42, monstersCaught: 17, evolutions: 5, bossesDefeated: 3, arenaWins: 0 }, 
+        stats: { mathSolved: 42, monstersCaught: 17, evolutions: 5, bossesDefeated: 3 }, 
         achievements: {},
         skillLevels: { 
             'Water': [3,2,1,0,0,0,0,0,0,0], 
@@ -849,7 +782,7 @@
             'Electric': [1,0,0,0,0,0,0,0,0,0], 
             'Ice': [1,0,0,0,0,0,0,0,0,0] 
         },
-        activeSpell: 4,
+        activeSpell: 4, // Flare Blitz (index 4)
         inventory: [
             { slot: 'weapon', name: 'Apprentice Wand', nameKo: '초보자 지팡이', emoji: '🪄', hpBonus: 0, pwrBonus: 10, id: 1 },
             { slot: 'hat', name: 'Pointy Hat', nameKo: '뾰족 모자', emoji: '🧙‍♂️', hpBonus: 20, pwrBonus: 5, id: 2 },
@@ -857,35 +790,31 @@
         ], 
         equipped: { hat: null, weapon: null }, 
         pets: [
-            { img: 'images/monsters_ready/bubblo.png', element: 'Water', name: 'Bubblo', nameKo: '버블로', level: 21, xp: 0, maxHp: 450, hp: 450, power: 150, happiness: 85, isRadiant: false },
-            { img: 'images/monsters_ready/char.png', element: 'Fire', name: 'Char', nameKo: '파이리', level: 21, xp: 0, maxHp: 420, hp: 420, power: 140, happiness: 70, isRadiant: false }
+            { img: 'images/monsters_ready/bubblo.png', element: 'Water', name: 'Bubblo', nameKo: '버블로', level: 35, xp: 0, maxHp: 450, hp: 450, power: 150, happiness: 85, isRadiant: false },
+            { img: 'images/monsters_ready/char.png', element: 'Fire', name: 'Char', nameKo: '파이리', level: 32, xp: 0, maxHp: 420, hp: 420, power: 140, happiness: 70, isRadiant: false }
         ], 
         activePets: [0, 1],
-        pokedex: {},
-        arenaWinStreak: 0
+        pokedex: {}
     };
+
     let creatorElement = 'Water';
     let creatorGender = 'boy';
-    let enemy = { img: "images/monsters_ready/twiggy.png", hp: 600, maxHp: 600, element: "Earth", power: 80, isBoss: false, isRadiant: false };
+
+    let enemy = { img: "images/monsters_ready/pebble.png", hp: 600, maxHp: 600, element: "Earth", power: 80, isBoss: false, isRadiant: false };
     let currentMathAnswer = 0, currentAction = 'attack', battleMode = 'wild'; 
     let mapX = 400, mapY = 150; 
     let evoQueue = [];
     let problemStartTime = 0; 
     let setupMode = 'wild';
+
     let selectedBiomeIndex = 0;
     let selectedDifficulty = 'medium';
     let selectedMathMode = 'both';
     let selectedBossElement = 'Earth';
 
-    // Arena variables
-    let arenaMathMode = 'addition';
-    let arenaOpponent = null;
-    let arenaBattleActive = false;
-    let craftSlot1 = null, craftSlot2 = null;
-    let breedingSelected = [];
+    const elementEmojis = { 'Water': '💧', 'Fire': '🔥', 'Earth': '🗿', 'Air': '💨', 'Electric': '⚡', 'Ice': '❄️' };
 
-    const elementEmojis = { 'Water': '💧', 'Fire': '🔥', 'Earth': '🍃', 'Air': '💨', 'Electric': '⚡', 'Ice': '❄️' };
-
+    // Biomes with actual background images
     const biomes = [
         { element: 'Earth', bg: 'url("images/backgrounds/woods.png") center/cover', decorations: ['🌿', '🌳', '🌲', '🍄', '🪨'], name: "Whispering Woods", nameKo: "속삭이는 숲" },
         { element: 'Water', bg: 'url("images/backgrounds/shores.png") center/cover', decorations: ['🌊', '🐚', '🦀', '🌴', '🫧'], name: "Sapphire Shores", nameKo: "사파이어 해변" },
@@ -896,6 +825,7 @@
     ];
     let currentBiome = biomes[0];
 
+    // Skill trees (abbreviated for space)
     const skillTrees = {
         'Water': [
             { name: 'Bubble', nameKo: '거품', icon: '🫧', color: '#74b9ff', shadow: '#0984e3', req: 1, baseMult: 1.0 },
@@ -971,28 +901,27 @@
         ]
     };
 
-    // Kid-friendly shop items with adjusted prices
+    // Shop items
     const shopItems = [
-        { slot: 'weapon', name: 'Wooden Wand', nameKo: '나무 지팡이', emoji: '🪄', hpBonus: 5, pwrBonus: 8, cost: 10 },
-        { slot: 'hat', name: 'Felt Hat', nameKo: '펠트 모자', emoji: '🧢', hpBonus: 15, pwrBonus: 2, cost: 8 },
-        { slot: 'weapon', name: 'Sparkly Pencil', nameKo: '반짝이는 연필', emoji: '✏️', hpBonus: 0, pwrBonus: 12, cost: 12 },
-        { slot: 'hat', name: 'Paper Crown', nameKo: '종이 왕관', emoji: '👑', hpBonus: 20, pwrBonus: 0, cost: 10 },
-        { slot: 'weapon', name: 'Apprentice Wand', nameKo: '초보자 지팡이', emoji: '🪄', hpBonus: 0, pwrBonus: 15, cost: 20 },
-        { slot: 'hat', name: 'Pointy Hat', nameKo: '뾰족 모자', emoji: '🧙‍♂️', hpBonus: 25, pwrBonus: 5, cost: 25 },
-        { slot: 'weapon', name: 'Enchanted Dagger', nameKo: '마법 단검', emoji: '🗡️', hpBonus: 10, pwrBonus: 20, cost: 35 },
-        { slot: 'hat', name: 'Hero Shield', nameKo: '영웅의 방패', emoji: '🛡️', hpBonus: 50, pwrBonus: 0, cost: 40 },
-        { slot: 'weapon', name: 'Crystal Staff', nameKo: '크리스탈 지팡이', emoji: '🔮', hpBonus: 15, pwrBonus: 25, cost: 50 },
-        { slot: 'hat', name: 'Magic Boots', nameKo: '마법 장화', emoji: '👢', hpBonus: 35, pwrBonus: 10, cost: 45 },
-        { slot: 'weapon', name: 'Golden Sword', nameKo: '황금 검', emoji: '🗡️', hpBonus: 10, pwrBonus: 35, cost: 60 },
-        { slot: 'hat', name: 'Knight Helmet', nameKo: '기사 투구', emoji: '🪖', hpBonus: 70, pwrBonus: 5, cost: 55 },
-        { slot: 'weapon', name: 'Dragon Staff', nameKo: '드래곤 지팡이', emoji: '🐉', hpBonus: 30, pwrBonus: 50, cost: 80 },
-        { slot: 'hat', name: 'Archmage Robes', nameKo: '대마법사 로브', emoji: '👘', hpBonus: 100, pwrBonus: 25, cost: 90 },
-        { slot: 'weapon', name: 'Trident of the Sea', nameKo: '바다의 삼지창', emoji: '🔱', hpBonus: 50, pwrBonus: 70, cost: 120 },
-        { slot: 'hat', name: 'Crown of Legends', nameKo: '전설의 왕관', emoji: '👑', hpBonus: 150, pwrBonus: 40, cost: 150 },
-        { slot: 'weapon', name: 'Galactic Wand', nameKo: '은하수 지팡이', emoji: '🌌', hpBonus: 80, pwrBonus: 100, cost: 200 }
+        { slot: 'hat', name: 'Apprentice Glasses', nameKo: '초보자 안경', emoji: '👓', hpBonus: 10, pwrBonus: 5, cost: 15 },
+        { slot: 'hat', name: 'Novice Cape', nameKo: '초심자 망토', emoji: '🧣', hpBonus: 30, pwrBonus: 10, cost: 25 },
+        { slot: 'weapon', name: 'Novice Spellbook', nameKo: '초심자 마법책', emoji: '📘', hpBonus: 0, pwrBonus: 25, cost: 40 },
+        { slot: 'weapon', name: 'Enchanted Dagger', nameKo: '마법 단검', emoji: '🗡️', hpBonus: 15, pwrBonus: 30, cost: 60 },
+        { slot: 'hat', name: 'Hero Shield', nameKo: '영웅의 방패', emoji: '🛡️', hpBonus: 80, pwrBonus: 0, cost: 85 },
+        { slot: 'hat', name: 'Magic Boots', nameKo: '마법 장화', emoji: '👢', hpBonus: 50, pwrBonus: 20, cost: 120 },
+        { slot: 'hat', name: 'Knight Helmet', nameKo: '기사 투구', emoji: '🪖', hpBonus: 120, pwrBonus: 10, cost: 150 },
+        { slot: 'weapon', name: 'Sparkling Ring', nameKo: '반짝이는 반지', emoji: '💍', hpBonus: 20, pwrBonus: 60, cost: 200 },
+        { slot: 'weapon', name: 'Golden Bow', nameKo: '황금 활', emoji: '🏹', hpBonus: 30, pwrBonus: 80, cost: 280 },
+        { slot: 'weapon', name: 'Dragon Staff', nameKo: '드래곤 지팡이', emoji: '🐉', hpBonus: 50, pwrBonus: 120, cost: 400 },
+        { slot: 'hat', name: 'Archmage Robes', nameKo: '대마법사 로브', emoji: '👘', hpBonus: 200, pwrBonus: 60, cost: 550 },
+        { slot: 'hat', name: 'Demon Horns', nameKo: '악마의 뿔', emoji: '😈', hpBonus: 100, pwrBonus: 150, cost: 700 },
+        { slot: 'weapon', name: 'Trident of the Sea', nameKo: '바다의 삼지창', emoji: '🔱', hpBonus: 100, pwrBonus: 200, cost: 900 },
+        { slot: 'hat', name: 'Crown of Legends', nameKo: '전설의 왕관', emoji: '👑', hpBonus: 350, pwrBonus: 150, cost: 1200 },
+        { slot: 'weapon', name: 'Galactic Wand', nameKo: '은하수 지팡이', emoji: '🌌', hpBonus: 250, pwrBonus: 300, cost: 2000 }
     ];
 
-    const monsterPool = [
+    // Monster pool with correct image paths
+    const monsterPool = [ 
         { img: 'images/monsters_ready/bubblo.png', type: 'Water', name: 'Bubblo', nameKo: '버블로' },
         { img: 'images/monsters_ready/finny.png', type: 'Water', name: 'Finny', nameKo: '피니' },
         { img: 'images/monsters_ready/jellipop.png', type: 'Water', name: 'Jellipop', nameKo: '젤리팝' },
@@ -1008,66 +937,27 @@
         { img: 'images/monsters_ready/pika.png', type: 'Electric', name: 'Pika', nameKo: '피카츄' },
         { img: 'images/monsters_ready/volty.png', type: 'Electric', name: 'Volty', nameKo: '볼티' },
         { img: 'images/monsters_ready/snowball.png', type: 'Ice', name: 'Snowball', nameKo: '스노우볼' },
-        { img: 'images/monsters_ready/pengy.png', type: 'Ice', name: 'Pengy', nameKo: '펭기' }
+        { img: 'images/monsters_ready/pengy.png', type: 'Ice', name: 'Pengy', nameKo: '펭기' },
+        { img: 'images/monsters_ready/titangolem.png', type: 'Earth', name: 'Titan Golem', nameKo: '타이탄 골렘' }
     ];
 
-    const bossPool = [
+    const bossPool = [ 
         { img: 'images/monsters_ready/leviathos.png', type: 'Water', name: 'Leviathos', nameKo: '레비아토스' },
         { img: 'images/monsters_ready/phoenixa.png', type: 'Fire', name: 'Phoenixa', nameKo: '피닉사' },
         { img: 'images/monsters_ready/titangolem.png', type: 'Earth', name: 'Titan Golem', nameKo: '타이탄 골렘' },
         { img: 'images/monsters_ready/skydragon.png', type: 'Air', name: 'Sky Dragon', nameKo: '스카이 드래곤' },
         { img: 'images/monsters_ready/zapdos.png', type: 'Electric', name: 'Zapdos', nameKo: '썬더' },
-        { img: 'images/monsters_ready/icequeen.png', type: 'Ice', name: 'Ice Queen', nameKo: '얼음 여왕' }
+        { img: 'images/monsters_ready/icequeen.png', type: 'Ice', name: 'Ice Queen', nameKo: '얼음 여왕' } 
     ];
 
-    const craftingRecipes = [
-        { slot1: 'weapon', slot2: 'weapon', result: { slot: 'weapon', name: 'Mystic Wand', nameKo: '신비한 지팡이', emoji: '✨', hpBonus: 25, pwrBonus: 40 } },
-        { slot1: 'hat', slot2: 'hat', result: { slot: 'hat', name: 'Crown of Wisdom', nameKo: '지혜의 왕관', emoji: '👑', hpBonus: 80, pwrBonus: 30 } },
-        { slot1: 'weapon', slot2: 'hat', result: { slot: 'weapon', name: 'Enchanted Blade', nameKo: '마법의 검', emoji: '⚔️', hpBonus: 40, pwrBonus: 60 } }
-    ];
+    const evolutions = {};
 
-    const achievementsList = [
-        { id: 'math10', text: 'Math Learner (Solve 10)', textKo: '수학 초보 (10문제 풀기)', type: 'mathSolved', req: 10, reward: 10 },
-        { id: 'math50', text: 'Math Whiz I (Solve 50)', textKo: '수학 천재 I (50문제 풀기)', type: 'mathSolved', req: 50, reward: 25 },
-        { id: 'math100', text: 'Math Whiz II (Solve 100)', textKo: '수학 천재 II (100문제 풀기)', type: 'mathSolved', req: 100, reward: 50 },
-        { id: 'catch5', text: 'Novice Catcher (Catch 5)', textKo: '초보 조련사 (5마리 포획)', type: 'monstersCaught', req: 5, reward: 10 },
-        { id: 'catch10', text: 'Catcher I (Catch 10)', textKo: '조련사 I (10마리 포획)', type: 'monstersCaught', req: 10, reward: 30 },
-        { id: 'boss1', text: 'Giant Slayer I (1 Boss)', textKo: '거인 학살자 I (보스 1마리)', type: 'bossesDefeated', req: 1, reward: 50 }
-    ];
-
-    // ========== LANGUAGE ==========
-    function toggleLanguage() {
-        currentLang = currentLang === 'en' ? 'ko' : 'en';
-        document.getElementById('lang-btn').innerText = currentLang === 'en' ? '🇰🇷 한국어' : '🇺🇸 English';
-        document.querySelectorAll('[data-en]').forEach(el => {
-            if (el.getAttribute('data-' + currentLang)) {
-                el.innerHTML = el.getAttribute('data-' + currentLang);
-            }
-        });
-        document.querySelectorAll('[data-placeholder-en]').forEach(el => {
-            if (el.getAttribute('data-placeholder-' + currentLang)) {
-                el.placeholder = el.getAttribute('data-placeholder-' + currentLang);
-            }
-        });
-    }
-    function t(en, ko) { return currentLang === 'ko' ? ko : en; }
-    function translateEl(elName) {
-        const dict = { 'Water': '물', 'Fire': '불', 'Earth': '땅', 'Air': '바람', 'Electric': '전기', 'Ice': '얼음' };
-        return currentLang === 'ko' ? (dict[elName] || elName) : elName;
-    }
-
-    // ========== MESSAGE ==========
-    function showGameMessage(text) {
-        document.getElementById('msg-text').innerText = text;
-        document.getElementById('msg-modal').classList.remove('hidden');
-    }
-    function closeGameMessage() { document.getElementById('msg-modal').classList.add('hidden'); }
-
-    // ========== SAVE/LOAD ==========
+    // --- SAVE/LOAD FUNCTIONS (keep existing) ---
     function populateSaveList() {
         const list = document.getElementById('save-list');
         list.innerHTML = "";
         let savesFound = false;
+        
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             if (key.startsWith('chgp_save_')) {
@@ -1075,7 +965,9 @@
                 const saveData = JSON.parse(localStorage.getItem(key));
                 const slot = document.createElement('div');
                 slot.className = 'save-slot';
+                
                 let avatarDisplay = `<img src="${saveData.avatar}" style="height:40px; object-fit:contain;" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙'">`;
+                
                 slot.innerHTML = `
                     <div class="save-slot-info" onclick="loadGame('${saveData.name}')">
                         <div style="width:50px; text-align:center;">${avatarDisplay}</div>
@@ -1089,39 +981,48 @@
                 list.appendChild(slot);
             }
         }
+        
         if(!savesFound) {
             list.innerHTML = `<p style='color:#7F8FA6; font-size:18px;'>${t("No saved characters found.", "저장된 캐릭터가 없습니다.")}</p>`;
         }
     }
+
     function showCharacterCreator() {
         document.getElementById('save-menu').classList.add('hidden');
         document.getElementById('creator-menu').classList.remove('hidden');
     }
+
     function cancelCreate() {
         document.getElementById('creator-menu').classList.add('hidden');
         document.getElementById('save-menu').classList.remove('hidden');
     }
+
     function deleteCharacter(key, name) {
         if(confirm(t(`Are you sure you want to delete ${name}? This cannot be undone!`, `정말로 ${name}을(를) 삭제하시겠습니까? 되돌릴 수 없습니다!`))) {
             localStorage.removeItem(key);
             populateSaveList();
         }
     }
+
     function selectElement(element, btn) {
         creatorElement = element;
         document.querySelectorAll('#element-options .avatar-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
     }
+
     function selectGender(gender, btn) {
         creatorGender = gender;
         document.querySelectorAll('#gender-options .avatar-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
     }
+
     function createNewCharacter() {
         const nameInput = document.getElementById('player-name-input').value.trim();
         if(nameInput === "") { showGameMessage(t("Please enter a name for your Wizard!", "마법사의 이름을 입력해주세요!")); return; }
         if(localStorage.getItem('chgp_save_' + nameInput.toLowerCase())) { showGameMessage(t("A character with this name already exists!", "이미 존재하는 이름입니다!")); return; }
+
         const avatarPath = `images/characters/${creatorElement.toLowerCase()}_${creatorGender}.png`;
+
         player = { 
             name: nameInput, avatar: avatarPath, element: creatorElement, 
             baseHp: 100, hp: 100, maxHp: 100, basePower: 20, power: 20, 
@@ -1143,14 +1044,17 @@
             activePets: [],
             pokedex: {}
         };
+
         saveGameUI();
         document.getElementById('start-screen').classList.add('hidden');
         goHub();
     }
+
     function saveGameUI() {
         if(!player.name || player.name === "Wizard") return;
         localStorage.setItem('chgp_save_' + player.name.toLowerCase(), JSON.stringify(player));
     }
+
     function exportSave() {
         try {
             const saveString = btoa(encodeURIComponent(JSON.stringify(player)));
@@ -1158,18 +1062,29 @@
             document.getElementById('save-modal').classList.remove('hidden');
         } catch(e) { showGameMessage(t("Error generating save password.", "암호 생성 중 오류가 발생했습니다.")); }
     }
-    function closeSaveModal() { document.getElementById('save-modal').classList.add('hidden'); }
+
+    function closeSaveModal() {
+        document.getElementById('save-modal').classList.add('hidden');
+    }
+
     function copySaveData() {
-        const box = document.getElementById('save-data-box'); box.select(); document.execCommand("copy");
+        const box = document.getElementById('save-data-box');
+        box.select();
+        document.execCommand("copy");
         showGameMessage(t("📋 Copied to clipboard! Keep it somewhere safe!", "📋 클립보드에 복사되었습니다! 안전한 곳에 보관하세요!"));
     }
+
     function downloadSaveData() {
         const saveString = document.getElementById('save-data-box').value;
         const blob = new Blob([saveString], { type: 'text/plain' });
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href = url; a.download = player.name + "_CHGP_Save.txt"; a.click();
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = player.name + "_CHGP_Save.txt"; 
+        a.click();
         window.URL.revokeObjectURL(url);
     }
+
     function importSave() {
         const input = document.getElementById('import-input').value.trim();
         if(!input) { showGameMessage(t("Please paste a password first!", "먼저 클라우드 암호를 붙여넣어 주세요!")); return; }
@@ -1177,6 +1092,7 @@
             const parsed = JSON.parse(decodeURIComponent(atob(input)));
             if(parsed && parsed.name) {
                 player = parsed;
+                // Ensure all required fields exist
                 if(!player.stats) player.stats = { mathSolved: 0, monstersCaught: 0, evolutions: 0, bossesDefeated: 0 };
                 if(!player.achievements) player.achievements = {};
                 if(player.berries === undefined) player.berries = 5;
@@ -1185,8 +1101,11 @@
                 if(!Array.isArray(player.activePets)) player.activePets = [];
                 if(!player.pokedex) player.pokedex = {};
                 for (let elem in player.skillLevels) {
-                    while (player.skillLevels[elem].length < 10) player.skillLevels[elem].push(0);
+                    while (player.skillLevels[elem].length < 10) {
+                        player.skillLevels[elem].push(0);
+                    }
                 }
+
                 saveGameUI(); 
                 document.getElementById('start-screen').classList.add('hidden');
                 goHub();
@@ -1194,6 +1113,7 @@
             } else { throw new Error("Invalid format"); }
         } catch(e) { showGameMessage(t("Invalid password! Make sure you copied the whole thing without spaces.", "잘못된 암호입니다! 공백 없이 전체를 복사했는지 확인하세요.")); }
     }
+
     function loadGame(name) {
         try {
             const data = localStorage.getItem('chgp_save_' + name.toLowerCase());
@@ -1207,13 +1127,17 @@
                 if(!Array.isArray(player.activePets)) player.activePets = [];
                 if(!player.pokedex) player.pokedex = {};
                 for (let elem in player.skillLevels) {
-                    while (player.skillLevels[elem].length < 10) player.skillLevels[elem].push(0);
+                    while (player.skillLevels[elem].length < 10) {
+                        player.skillLevels[elem].push(0);
+                    }
                 }
+
                 document.getElementById('start-screen').classList.add('hidden');
                 goHub(); saveGameUI();
             }
-        } catch (e) { showGameMessage(t("Error loading character.", "캐릭터를 불러오는 중 오류가 발생했습니다.")); }
+        } catch (e) { console.error("Save file corrupted:", e); showGameMessage(t("Error loading character.", "캐릭터를 불러오는 중 오류가 발생했습니다.")); }
     }
+
     function logOut() {
         document.getElementById('hub-screen').classList.add('hidden');
         document.getElementById('start-screen').classList.remove('hidden');
@@ -1222,27 +1146,27 @@
         populateSaveList();
     }
 
-    // ========== HUB ==========
+    function getAvatarHTML(avPath, cssClass = "") {
+        return `<img src="${avPath}" class="${cssClass}" style="max-height:100%; max-width:100%; object-fit:contain;" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙‍♂️'">`;
+    }
+
     function goHub() {
         document.getElementById('overworld-screen').classList.add('hidden');
         document.getElementById('battle-screen').classList.add('hidden');
-        document.getElementById('arena-screen').classList.add('hidden');
         document.getElementById('hub-screen').classList.remove('hidden');
         document.getElementById('hub-name').innerText = player.name;
         document.getElementById('hub-lvl').innerText = player.level;
         document.getElementById('hub-coins').innerText = player.coins; 
         document.getElementById('hub-berries').innerText = player.berries; 
     }
+
     function healAll() {
         player.hp = player.maxHp;
         player.pets.forEach(p => p.hp = p.maxHp);
         showGameMessage(t("💖 Magic surrounds you! You and your pets are fully healed!", "💖 마법의 기운이 감쌉니다! 펫과 체력이 모두 회복되었습니다!"));
-        saveGameUI(); 
-        if (!document.getElementById('battle-screen').classList.contains('hidden')) updateBattleUI();
-        if (!document.getElementById('arena-screen').classList.contains('hidden')) updateArenaUI();
+        saveGameUI(); updateBattleUI(); 
     }
 
-    // ========== OVERWORLD ==========
     function generateMapEnvironment() {
         const mapScreen = document.getElementById('overworld-screen');
         mapScreen.style.background = currentBiome.bg;
@@ -1254,13 +1178,14 @@
             decor.className = 'map-decor';
             decor.innerText = currentBiome.decorations[Math.floor(Math.random() * currentBiome.decorations.length)];
             decor.style.fontSize = (Math.random() * 20 + 30) + 'px';
-            decor.style.left = Math.random() * 1050 + 'px';
-            decor.style.top = Math.random() * 450 + 'px';
+            decor.style.left = Math.random() * 850 + 'px';
+            decor.style.top = Math.random() * 350 + 'px';
             mapArea.appendChild(decor);
         }
         const playerElement = document.getElementById('map-player');
         playerElement.innerHTML = `<img src="${player.avatar}" style="height: 70px; width: auto; transform: scaleX(1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙‍♂️'">`;
     }
+
     function enterOverworld() {
         generateMapEnvironment(); 
         document.getElementById('hub-screen').classList.add('hidden');
@@ -1270,11 +1195,19 @@
         mapX = 400; mapY = 150; 
         updatePlayerSprite();
     }
+
+    // Full map movement (0 to 800)
     function movePlayer(dx, dy) {
-        mapX += dx * 60; mapY += dy * 60;
-        if(mapX < 0) mapX = 0; if(mapX > 1000) mapX = 1000;
-        if(mapY < 0) mapY = 0; if(mapY > 400) mapY = 400;
+        mapX += dx * 60;
+        mapY += dy * 60;
+        
+        if(mapX < 0) mapX = 0;
+        if(mapX > 800) mapX = 800;
+        if(mapY < 0) mapY = 0;
+        if(mapY > 320) mapY = 320;
+        
         updatePlayerSprite();
+
         if(Math.random() < 0.15) {
             const overlay = document.getElementById('flash-overlay');
             overlay.classList.add('encounter-flash');
@@ -1286,13 +1219,13 @@
             }, 1500);
         }
     }
+
     function updatePlayerSprite() {
         const sprite = document.getElementById('map-player');
         sprite.style.left = mapX + 'px';
         sprite.style.top = mapY + 'px';
     }
 
-    // ========== BATTLE HELPERS ==========
     function getTruePlayerPower() {
         let tp = player.power;
         if(player.activePets) {
@@ -1303,6 +1236,7 @@
         let finalMult = baseMult + ((spellLvl - 1) * 0.2); 
         return Math.floor(tp * finalMult);
     }
+
     function getPetPower() {
         let pp = 0;
         if(player.activePets) {
@@ -1310,6 +1244,7 @@
         }
         return pp;
     }
+
     function getTruePlayerHp() {
         let thp = player.maxHp;
         if(player.activePets) {
@@ -1325,7 +1260,6 @@
         document.getElementById('battle-screen').classList.remove('hidden');
 
         document.getElementById('hud-player-name').innerText = player.name;
-        document.getElementById('player-sprite').innerHTML = `<img src="${player.avatar}" style="max-height:200px; max-width:200px; object-fit:contain; transform:scaleX(1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙‍♂️'">`;
 
         const spell = skillTrees[player.element][player.activeSpell];
         if (spell) {
@@ -1341,8 +1275,10 @@
         if(battleMode === 'boss') {
             document.getElementById('battle-screen').style.background = 'url("images/backgrounds/tower.png") center/cover';
             document.getElementById('boss-warning').innerText = t("⚠️ THICK ARMOR: Bosses take -50% Damage! ⚠️", "⚠️ 두꺼운 장갑: 보스는 데미지를 50%만 받습니다! ⚠️");
+
             const bArray = bossPool.filter(b => b.type === selectedBossElement);
             const b = bArray.length > 0 ? bArray[0] : bossPool[Math.floor(Math.random() * bossPool.length)];
+
             enemy = { 
                 img: b.img, element: b.type, name: b.name, nameKo: b.nameKo,
                 maxHp: Math.max(150, Math.floor(combinedPower * 8) + (player.level * 30)), 
@@ -1354,7 +1290,7 @@
         } else if(battleMode === 'practice') {
             document.getElementById('battle-screen').style.background = 'url("images/backgrounds/dojo.png") center/cover';
             document.getElementById('boss-warning').innerText = "";
-            enemy = { img: "🎯", hp: 50 + (player.level * 10), maxHp: 50 + (player.level * 10), element: "Earth", power: 0, name: "Target Dummy", nameKo: "훈련용 허수아비", isBoss: false, isRadiant: false };
+            enemy = { img: "images/monsters_ready/target.png", hp: 50 + (player.level * 10), maxHp: 50 + (player.level * 10), element: "Earth", power: 0, name: "Target Dummy", nameKo: "훈련용 허수아비", isBoss: false, isRadiant: false };
         } else {
             document.getElementById('battle-screen').style.background = currentBiome.bg;
             document.getElementById('boss-warning').innerText = "";
@@ -1362,15 +1298,19 @@
         }
         recalculateStats(); updateBattleUI();
     }
+
     function spawnEnemy(combinedPower, thp) {
         const biomeMonsters = monsterPool.filter(m => m.type === currentBiome.element);
         const m = biomeMonsters.length > 0 ? biomeMonsters[Math.floor(Math.random() * biomeMonsters.length)] : monsterPool[Math.floor(Math.random() * monsterPool.length)];
+
         let isRad = Math.random() < 0.05;
-        // Kid-friendly difficulty multipliers
-        let diffHpMult = selectedDifficulty === 'easy' ? 0.6 : (selectedDifficulty === 'hard' ? 1.4 : 1.0);
-        let diffPwrMult = selectedDifficulty === 'easy' ? 0.6 : (selectedDifficulty === 'hard' ? 1.4 : 1.0);
+
+        let diffHpMult = selectedDifficulty === 'easy' ? 0.5 : (selectedDifficulty === 'hard' ? 2.0 : 1);
+        let diffPwrMult = selectedDifficulty === 'easy' ? 0.5 : (selectedDifficulty === 'hard' ? 2.0 : 1);
+
         let calcHp = Math.max(20, Math.floor((combinedPower * 3 + player.level * 15) * diffHpMult));
         let calcPwr = Math.max(5, Math.floor((thp / 4 + player.level * 3) * diffPwrMult));
+
         enemy = { 
             img: m.img, element: m.type, name: (isRad ? "✨Radiant " : "") + m.name, nameKo: (isRad ? "✨빛나는 " : "") + m.nameKo,
             maxHp: isRad ? Math.floor(calcHp * 1.5) : calcHp, 
@@ -1381,6 +1321,7 @@
         trackPokedexEncounter(m, currentBiome.name);
         updateBattleUI();
     }
+
     function fleeBattle() {
         if(battleMode === 'boss') goHub();
         else if(battleMode === 'wild') {
@@ -1390,212 +1331,55 @@
         else goHub();
     }
 
-    // ========== MATH MODAL ==========
-    function openMathModal(action) {
-        currentAction = action;
-        document.getElementById('math-modal').classList.remove('hidden');
-        const title = document.getElementById('math-title');
-        if(action === 'catch') {
-            title.innerText = t("Hard Puzzle to Catch!", "잡기 위한 어려운 문제!"); 
-            title.style.color = "var(--gold)";
-        } else {
-            title.innerText = t("Solve to Attack!", "문제를 풀고 공격하세요!"); 
-            title.style.color = "var(--btn-blue)";
-        }
-
-        let mathTypes = [];
-        if (selectedMathMode === 'addition') mathTypes = ['add'];
-        else if (selectedMathMode === 'subtraction') mathTypes = ['sub'];
-        else if (selectedMathMode === 'both') mathTypes = ['add', 'sub'];
-        else if (selectedMathMode === 'multiplication') mathTypes = ['mul'];
-        else if (selectedMathMode === 'division') mathTypes = ['div'];
-        else if (selectedMathMode === 'all') mathTypes = ['add', 'sub', 'mul', 'div'];
-
-        let currentType = mathTypes[Math.floor(Math.random() * mathTypes.length)];
-
-        let p1, p2, whole;
-        // Kid-friendly max numbers
-        let maxNum = 10 + player.level;
-        if (selectedDifficulty === 'easy') maxNum = Math.max(5, maxNum - 5);
-        if (selectedDifficulty === 'hard') maxNum += 10;
-        if (action === 'catch') maxNum += 15;
-        maxNum = Math.min(100, maxNum); // keep under 100 for kids
-
-        if (currentType === 'add' || currentType === 'sub') {
-            whole = Math.floor(Math.random() * maxNum) + 5;
-            p1 = Math.floor(Math.random() * (whole - 1)) + 1;
-            p2 = whole - p1;
-        } else {
-            let maxFactor = Math.min(10, Math.floor(maxNum / 5) + 3); // keep tables small
-            if (selectedDifficulty === 'easy') maxFactor = 5;
-            let a = Math.floor(Math.random() * maxFactor) + 1;
-            let b = Math.floor(Math.random() * maxFactor) + 1;
-            p1 = a; p2 = b; whole = a * b;
-        }
-
-        const inputHtml = `<input id="ans" type="number" autocomplete="off">`;
-        const b1 = document.getElementById('box1');
-        const b2 = document.getElementById('box2');
-        const b3 = document.getElementById('box3');
-        const op = document.getElementById('math-op');
-        let blankPos = Math.floor(Math.random() * 3);
-
-        if (currentType === 'add' || currentType === 'mul') {
-            op.innerText = currentType === 'add' ? "+" : "×";
-            b1.className = "circle part"; b2.className = "circle part"; b3.className = "circle whole";
-            currentMathAnswer = (blankPos === 0) ? p1 : (blankPos === 1) ? p2 : whole;
-            b1.innerHTML = blankPos === 0 ? inputHtml : p1;
-            b2.innerHTML = blankPos === 1 ? inputHtml : p2;
-            b3.innerHTML = blankPos === 2 ? inputHtml : whole;
-        } else {
-            op.innerText = currentType === 'sub' ? "-" : "÷";
-            b1.className = "circle whole"; b2.className = "circle part"; b3.className = "circle part";
-            currentMathAnswer = (blankPos === 0) ? whole : (blankPos === 1) ? p1 : p2;
-            b1.innerHTML = blankPos === 0 ? inputHtml : whole;
-            b2.innerHTML = blankPos === 1 ? inputHtml : p1;
-            b3.innerHTML = blankPos === 2 ? inputHtml : p2;
-        }
-        problemStartTime = Date.now();
-        const ansInput = document.getElementById('ans');
-        if (ansInput) {
-            ansInput.removeEventListener('keydown', mathEnterHandler);
-            ansInput.addEventListener('keydown', mathEnterHandler);
-            setTimeout(() => ansInput.focus(), 100);
-        }
-    }
-    function mathEnterHandler(e) { if (e.key === 'Enter') { e.preventDefault(); submitMath(); } }
-
+    // ENHANCED: Epic battle sequence animations
     function shootMagicProjectile() {
         const stage = document.getElementById('stage');
         const proj = document.createElement('div');
-        proj.className = 'magic-projectile ' + player.element.toLowerCase();
+        proj.className = 'magic-projectile';
         const spell = skillTrees[player.element][player.activeSpell];
         proj.innerText = spell ? spell.icon : '✨';
-        proj.style.left = '150px'; proj.style.bottom = '80px';
+        proj.style.left = '150px'; 
+        proj.style.bottom = '80px';
+        proj.style.fontSize = '90px';
         stage.appendChild(proj);
-        setTimeout(() => { proj.style.left = '650px'; proj.style.transform = 'scale(1.5)'; }, 50);
-        setTimeout(() => { proj.style.transform = 'scale(2)'; proj.style.filter = 'drop-shadow(0 0 40px orange)'; }, 200);
-        setTimeout(() => { proj.remove(); const flash = document.getElementById('flash-overlay'); flash.style.opacity = '0.8'; setTimeout(() => flash.style.opacity = '0', 100); }, 450);
-    }
-
-    function showDamageText(amt, cont, isCrit) {
-        const d = document.createElement('div'); 
-        d.className = isCrit ? 'crit-text' : 'dmg-text'; 
-        d.innerText = `-${amt}`;
-        cont.appendChild(d); 
-        setTimeout(() => d.remove(), 1200);
-    }
-    function showPetDamageText(amt, cont) {
-        const d = document.createElement('div'); 
-        d.className = 'pet-dmg-text'; 
-        d.innerText = `🐾 -${amt}`;
-        cont.appendChild(d); 
-        setTimeout(() => d.remove(), 1200);
-    }
-    function triggerConfetti() {
-        const conf = document.getElementById('confetti-container');
-        conf.style.display = 'block'; 
-        conf.style.background = 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%)';
-        conf.style.animation = 'confetti 1s ease-out';
+        
+        // Animate projectile with trail effect
         setTimeout(() => { 
-            conf.style.display = 'none'; 
-            conf.style.background = 'none';
-            conf.style.animation = '';
-        }, 1000);
-    }
-    function checkAdvantage(p, e) {
-        if(p===e) return 1;
-        if((p==='Water'&&e==='Fire')||(p==='Fire'&&e==='Earth')||(p==='Earth'&&e==='Electric')||(p==='Electric'&&e==='Water')||(p==='Air'&&e==='Earth')||(p==='Ice'&&e==='Air')) return 1.5;
-        return 0.7;
-    }
-
-    function submitMath() {
-        const inputVal = document.getElementById('ans').value;
-        if(inputVal === "") return; 
-        const ans = parseInt(inputVal);
-        document.getElementById('math-modal').classList.add('hidden');
-
-        const timeTaken = Date.now() - problemStartTime;
-
-        if(ans === currentMathAnswer) {
-            player.mathStreak++; 
-            player.stats.mathSolved++; 
-
-            player.activePets.forEach(idx => {
-                let pet = player.pets[idx];
-                if(pet && pet.isEgg) {
-                    pet.mathToHatch--;
-                    if(pet.mathToHatch <= 0) hatchEgg(pet);
-                }
-            });
-
-            let isCrit = false;
-            if(timeTaken < 4000) { isCrit = true; } 
-            else if (Math.random() < 0.1) { isCrit = true; } 
-
-            if (!document.getElementById('arena-screen').classList.contains('hidden')) {
-                arenaAttack(isCrit);
-            } else {
-                regularAttack(isCrit);
-            }
-        } else {
-            player.mathStreak = Math.max(-2, player.mathStreak - 1); 
-            if (!document.getElementById('arena-screen').classList.contains('hidden')) {
-                arenaEnemyTurn();
-            } else {
-                enemyTurnAttack();
-            }
-        }
+            proj.style.left = '650px'; 
+            proj.style.transform = 'scale(1.5)';
+        }, 50);
+        
+        setTimeout(() => { 
+            proj.style.transform = 'scale(2)';
+            proj.style.filter = 'drop-shadow(0 0 40px orange)';
+        }, 200);
+        
+        setTimeout(() => { 
+            proj.remove(); 
+            // Flash effect on hit
+            const flash = document.getElementById('flash-overlay');
+            flash.style.opacity = '0.8';
+            setTimeout(() => flash.style.opacity = '0', 100);
+        }, 450);
     }
 
-    function regularAttack(isCrit) {
-        const pCont = document.getElementById('player-container');
-        const pet1Cont = document.getElementById('pet1-container');
-        const pet2Cont = document.getElementById('pet2-container');
-        const eCont = document.getElementById('enemy-container');
+    function hatchEgg(pet) {
+        let pool = Math.random() < 0.2 ? bossPool : monsterPool; 
+        let m = pool[Math.floor(Math.random() * pool.length)];
+        let isRad = Math.random() < 0.1; 
 
-        let elMult = battleMode === 'practice' ? 1 : checkAdvantage(player.element, enemy.element);
-        let playerDmg = Math.floor(getTruePlayerPower() * elMult);
-        if(isCrit) playerDmg *= 2; 
-        if(enemy.isBoss) playerDmg = Math.max(1, Math.floor(playerDmg / 2));
-
-        let petDmg = Math.floor(getPetPower() * elMult);
-        if(enemy.isBoss) petDmg = Math.max(0, Math.floor(petDmg / 2));
-
-        let totalDmg = playerDmg + petDmg;
-
-        pCont.classList.add('attack-anim');
-        if(!pet1Cont.classList.contains('hidden')) pet1Cont.classList.add('attack-anim');
-        if(!pet2Cont.classList.contains('hidden')) pet2Cont.classList.add('attack-anim');
-
-        shootMagicProjectile(); 
-
-        setTimeout(() => {
-            pCont.classList.remove('attack-anim'); 
-            pet1Cont.classList.remove('attack-anim'); 
-            pet2Cont.classList.remove('attack-anim'); 
-
-            if(isCrit) {
-                eCont.classList.add('shake-hard'); 
-                triggerConfetti();
-                document.getElementById('element-adv').innerText = t("CRITICAL HIT! 💥", "크리티컬 히트! 💥");
-            } else {
-                eCont.classList.add('damage-anim');
-                if(elMult > 1 && !enemy.isBoss) document.getElementById('element-adv').innerText = t("SUPER EFFECTIVE! ⭐", "효과가 굉장히 뛰어났다! ⭐");
-                else if(enemy.isBoss) document.getElementById('element-adv').innerText = t("ARMOR RESISTED! 🛡️", "방어력에 막혔다! 🛡️");
-            }
-
-            showDamageText(playerDmg, eCont, isCrit);
-            if(petDmg > 0) { setTimeout(() => { showPetDamageText(petDmg, eCont); }, 200); }
-
-            enemy.hp -= totalDmg; updateBattleUI();
-
-            setTimeout(() => { 
-                eCont.classList.remove('damage-anim'); eCont.classList.remove('shake-hard');
-                document.getElementById('element-adv').innerText = ""; 
-                if(enemy.hp <= 0) { checkWin(); } else { enemyTurnAttack(); }
-            }, 500);
-        }, 400);
+        pet.isEgg = false;
+        pet.img = m.img;
+        pet.name = (isRad ? "✨Radiant " : "") + (m.name || "Monster");
+        pet.nameKo = (isRad ? "✨빛나는 " : "") + (m.nameKo || "몬스터");
+        pet.element = m.type || m.element;
+        pet.isRadiant = isRad;
+        pet.power = isRad ? 50 : 30; 
+        pet.maxHp = isRad ? 200 : 150;
+        pet.hp = pet.maxHp;
+        pet.level = 1;
+        pet.xp = 0;
+        showGameMessage(t(`🎉 AMAZING! Your Mystery Egg hatched into a ${pet.name}!`, `🎉 멋져요! 신비한 알에서 ${pet.nameKo}이(가) 부화했습니다!`));
     }
 
     function enemyTurnAttack() {
@@ -1603,9 +1387,19 @@
         const pCont = document.getElementById('player-container');
         const eCont = document.getElementById('enemy-container');
 
-        eCont.style.transform = "translateX(-60px) scale(1.1)";
+        // Enemy attack animation
+        eCont.style.transform = "translateX(-80px) scale(1.2)";
+        eCont.style.filter = "brightness(1.5) drop-shadow(0 0 30px red)";
+        
         setTimeout(() => {
-            eCont.style.transform = "translateX(0) scale(1)"; pCont.classList.add('damage-anim');
+            eCont.style.transform = "translateX(0) scale(1)";
+            eCont.style.filter = "none";
+            pCont.classList.add('damage-anim');
+            
+            // Flash effect
+            const flash = document.getElementById('flash-overlay');
+            flash.style.opacity = '0.5';
+            setTimeout(() => flash.style.opacity = '0', 200);
 
             let dmgRemaining = enemy.power;
             if(player.activePets) {
@@ -1627,59 +1421,491 @@
                     }
                 }
             }
-            if(dmgRemaining > 0) { player.hp -= dmgRemaining; showDamageText(dmgRemaining, pCont, false); }
+            if(dmgRemaining > 0) { 
+                player.hp -= dmgRemaining; 
+                showDamageText(dmgRemaining, pCont, false); 
+            }
             updateBattleUI();
-            setTimeout(() => { pCont.classList.remove('damage-anim'); checkLoss(); }, 400);
-        }, 200);
+            setTimeout(() => { 
+                pCont.classList.remove('damage-anim'); 
+                checkLoss(); 
+            }, 500);
+        }, 300);
+    }
+
+    function openSetupModal(mode) {
+        setupMode = mode;
+        document.getElementById('setup-modal').classList.remove('hidden');
+
+        const grid = document.getElementById('map-grid');
+        const title = document.getElementById('setup-title');
+        const startBtn = document.getElementById('setup-start-btn');
+
+        if (mode === 'wild') {
+            title.innerText = t("🗺️ Choose Destination", "🗺️ 목적지 선택");
+            grid.style.display = "grid";
+            startBtn.innerText = t("Start Expedition!", "탐험 시작!");
+            startBtn.onclick = startExpedition;
+
+            grid.innerHTML = "";
+            biomes.forEach((biome, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-primary';
+                btn.style.fontSize = '14px';
+                btn.style.padding = '8px';
+                btn.style.opacity = selectedBiomeIndex === index ? '1' : '0.6';
+                btn.style.borderColor = selectedBiomeIndex === index ? 'var(--gold)' : 'white';
+                btn.innerHTML = `${biome.decorations[0]} ${t(biome.name, biome.nameKo)}`;
+
+                btn.onclick = () => {
+                    selectedBiomeIndex = index;
+                    openSetupModal('wild'); 
+                };
+                grid.appendChild(btn);
+            });
+        } else if (mode === 'dojo') {
+            title.innerText = t("🎯 Dojo Setup", "🎯 훈련장 설정");
+            grid.style.display = "none";
+            startBtn.innerText = t("Start Practice!", "훈련 시작!");
+            startBtn.onclick = startDojo;
+        }
+    }
+
+    function closeSetupModal() {
+        document.getElementById('setup-modal').classList.add('hidden');
+    }
+
+    function setMathMode(mode) {
+        selectedMathMode = mode;
+        document.getElementById('btn-math-add').style.opacity = mode === 'addition' ? '1' : '0.5';
+        document.getElementById('btn-math-sub').style.opacity = mode === 'subtraction' ? '1' : '0.5';
+        document.getElementById('btn-math-both').style.opacity = mode === 'both' ? '1' : '0.5';
+        document.getElementById('btn-math-mul').style.opacity = mode === 'multiplication' ? '1' : '0.5';
+        document.getElementById('btn-math-div').style.opacity = mode === 'division' ? '1' : '0.5';
+        document.getElementById('btn-math-all').style.opacity = mode === 'all' ? '1' : '0.5';
+    }
+
+    function setDifficulty(diff) {
+        selectedDifficulty = diff;
+        document.getElementById('btn-diff-easy').style.opacity = diff === 'easy' ? '1' : '0.5';
+        document.getElementById('btn-diff-medium').style.opacity = diff === 'medium' ? '1' : '0.5';
+        document.getElementById('btn-diff-hard').style.opacity = diff === 'hard' ? '1' : '0.5';
+    }
+
+    function startExpedition() {
+        closeSetupModal();
+        currentBiome = biomes[selectedBiomeIndex];
+        enterOverworld();
+    }
+
+    function startDojo() {
+        closeSetupModal();
+        enterBattle('practice');
+    }
+
+    function openBossSelect() {
+        document.getElementById('boss-select-modal').classList.remove('hidden');
+    }
+
+    function closeBossSelect() {
+        document.getElementById('boss-select-modal').classList.add('hidden');
+    }
+
+    function startBossBattle(element) {
+        selectedBossElement = element;
+        closeBossSelect();
+        enterBattle('boss');
+    }
+
+    // --- MATH ENGINE ---
+    function openMathModal(action) {
+        currentAction = action;
+        document.getElementById('math-modal').classList.remove('hidden');
+        const title = document.getElementById('math-title');
+
+        if(action === 'catch') {
+            title.innerText = t("Hard Puzzle to Catch!", "잡기 위한 어려운 문제!"); 
+            title.style.color = "var(--gold)";
+        } else {
+            title.innerText = t("Solve to Attack!", "문제를 풀고 공격하세요!"); 
+            title.style.color = "var(--btn-blue)";
+        }
+
+        let mathTypes = [];
+        if (selectedMathMode === 'addition') mathTypes = ['add'];
+        else if (selectedMathMode === 'subtraction') mathTypes = ['sub'];
+        else if (selectedMathMode === 'both') mathTypes = ['add', 'sub'];
+        else if (selectedMathMode === 'multiplication') mathTypes = ['mul'];
+        else if (selectedMathMode === 'division') mathTypes = ['div'];
+        else if (selectedMathMode === 'all') mathTypes = ['add', 'sub', 'mul', 'div'];
+
+        let currentType = mathTypes[Math.floor(Math.random() * mathTypes.length)];
+
+        let p1, p2, whole;
+
+        if (currentType === 'add' || currentType === 'sub') {
+            let maxNum = Math.min(100, 15 + (player.level * 2) + (player.mathStreak * 3));
+            if(selectedDifficulty === 'easy') maxNum = Math.max(10, maxNum - 20);
+            if(selectedDifficulty === 'hard') maxNum += 30;
+            if (action === 'catch') maxNum += 40;
+            maxNum = Math.max(10, Math.min(500, maxNum));
+
+            whole = Math.floor(Math.random() * maxNum) + 10;
+            p1 = Math.floor(Math.random() * (whole - 1)) + 1;
+            p2 = whole - p1;
+        } else {
+            let t1 = Math.floor(Math.random() * 20) + 1;
+            let t2 = Math.floor(Math.random() * 20) + 1;
+
+            if(selectedDifficulty === 'easy') {
+                t1 = Math.floor(Math.random() * 10) + 1;
+                t2 = Math.floor(Math.random() * 5) + 1;
+            } else if (selectedDifficulty === 'hard') {
+                t1 = Math.floor(Math.random() * 15) + 10;
+                t2 = Math.floor(Math.random() * 15) + 10;
+            }
+
+            if (action === 'catch') {
+                t1 = Math.floor(Math.random() * 20) + 10;
+                t2 = Math.floor(Math.random() * 20) + 10;
+            }
+
+            p1 = t1;
+            p2 = t2;
+            whole = p1 * p2;
+        }
+
+        const inputHtml = `<input id="ans" type="number" autocomplete="off">`;
+        const b1 = document.getElementById('box1');
+        const b2 = document.getElementById('box2');
+        const b3 = document.getElementById('box3');
+        const op = document.getElementById('math-op');
+
+        let blankPos = Math.floor(Math.random() * 3);
+
+        if (currentType === 'add' || currentType === 'mul') {
+            op.innerText = currentType === 'add' ? "+" : "×";
+            b1.className = "circle part"; b2.className = "circle part"; b3.className = "circle whole";
+            currentMathAnswer = (blankPos === 0) ? p1 : (blankPos === 1) ? p2 : whole;
+            b1.innerHTML = blankPos === 0 ? inputHtml : p1;
+            b2.innerHTML = blankPos === 1 ? inputHtml : p2;
+            b3.innerHTML = blankPos === 2 ? inputHtml : whole;
+        } else if (currentType === 'sub' || currentType === 'div') {
+            op.innerText = currentType === 'sub' ? "-" : "÷";
+            b1.className = "circle whole"; b2.className = "circle part"; b3.className = "circle part";
+            currentMathAnswer = (blankPos === 0) ? whole : (blankPos === 1) ? p1 : p2;
+            b1.innerHTML = blankPos === 0 ? inputHtml : whole;
+            b2.innerHTML = blankPos === 1 ? inputHtml : p1;
+            b3.innerHTML = blankPos === 2 ? inputHtml : p2;
+        }
+
+        problemStartTime = Date.now();
+        
+        const ansInput = document.getElementById('ans');
+        if (ansInput) {
+            ansInput.removeEventListener('keydown', mathEnterHandler);
+            ansInput.addEventListener('keydown', mathEnterHandler);
+            setTimeout(() => ansInput.focus(), 100);
+        }
+    }
+
+    function mathEnterHandler(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            submitMath();
+        }
+    }
+
+    function submitMath() {
+        const inputVal = document.getElementById('ans').value;
+        if(inputVal === "") return; 
+        const ans = parseInt(inputVal);
+        document.getElementById('math-modal').classList.add('hidden');
+
+        const pCont = document.getElementById('player-container');
+        const pet1Cont = document.getElementById('pet1-container');
+        const pet2Cont = document.getElementById('pet2-container');
+        const eCont = document.getElementById('enemy-container');
+        const timeTaken = Date.now() - problemStartTime;
+
+        if(ans === currentMathAnswer) {
+            player.mathStreak++; 
+            player.stats.mathSolved++; 
+
+            player.activePets.forEach(idx => {
+                let pet = player.pets[idx];
+                if(pet && pet.isEgg) {
+                    pet.mathToHatch--;
+                    if(pet.mathToHatch <= 0) hatchEgg(pet);
+                }
+            });
+
+            let isCrit = false;
+            if(timeTaken < 4000) { isCrit = true; } 
+            else if (Math.random() < 0.1) { isCrit = true; } 
+
+            if(currentAction === 'catch') {
+                if(enemy.isBoss) { showGameMessage(t("You cannot catch Boss monsters!", "보스 몬스터는 잡을 수 없습니다!")); return; }
+                showGameMessage(t(`✨ AMAZING! ${enemy.name} was caught!`, `✨ 멋져요! ${enemy.nameKo}을(를) 잡았습니다!`));
+                player.stats.monstersCaught++;
+                
+                player.pets.push({ 
+                    img: enemy.img, element: enemy.element, name: enemy.name, nameKo: enemy.nameKo,
+                    level: 1, xp: 0, happiness: 50, isRadiant: enemy.isRadiant,
+                    maxHp: enemy.maxHp, hp: enemy.hp, power: enemy.power 
+                });
+                
+                const pdKey = enemy.name;
+                if(player.pokedex[pdKey]) { player.pokedex[pdKey].caught = true; }
+                
+                player.xp += 50; 
+                saveGameUI(); 
+                checkLevelUp(); 
+                if(evoQueue.length === 0) { 
+                    if(battleMode === 'wild') {
+                        document.getElementById('battle-screen').classList.add('hidden');
+                        document.getElementById('overworld-screen').classList.remove('hidden');
+                    } else goHub(); 
+                }
+            } else {
+                let elMult = battleMode === 'practice' ? 1 : checkAdvantage(player.element, enemy.element);
+
+                let playerDmg = Math.floor(getTruePlayerPower() * elMult);
+                if(isCrit) playerDmg *= 2; 
+                if(enemy.isBoss) playerDmg = Math.max(1, Math.floor(playerDmg / 2));
+
+                let petDmg = Math.floor(getPetPower() * elMult);
+                if(enemy.isBoss) petDmg = Math.max(0, Math.floor(petDmg / 2));
+
+                let totalDmg = playerDmg + petDmg;
+
+                // ENHANCED: Epic attack sequence
+                pCont.classList.add('attack-anim');
+                if(!pet1Cont.classList.contains('hidden')) pet1Cont.classList.add('attack-anim');
+                if(!pet2Cont.classList.contains('hidden')) pet2Cont.classList.add('attack-anim');
+
+                shootMagicProjectile(); 
+
+                setTimeout(() => {
+                    pCont.classList.remove('attack-anim'); 
+                    pet1Cont.classList.remove('attack-anim'); 
+                    pet2Cont.classList.remove('attack-anim'); 
+
+                    // Screen flash on hit
+                    const flash = document.getElementById('flash-overlay');
+                    flash.style.opacity = '0.8';
+                    setTimeout(() => flash.style.opacity = '0', 150);
+                    
+                    if(isCrit) {
+                        eCont.classList.add('shake-hard'); 
+                        triggerConfetti();
+                        document.getElementById('element-adv').innerText = t("💥 CRITICAL HIT! 💥", "💥 크리티컬 히트! 💥");
+                        
+                        // Extra flash for crit
+                        setTimeout(() => {
+                            flash.style.opacity = '1';
+                            setTimeout(() => flash.style.opacity = '0', 200);
+                        }, 100);
+                    } else {
+                        eCont.classList.add('damage-anim');
+                        if(elMult > 1 && !enemy.isBoss) document.getElementById('element-adv').innerText = t("⭐ SUPER EFFECTIVE! ⭐", "⭐ 효과가 굉장히 뛰어났다! ⭐");
+                        else if(enemy.isBoss) document.getElementById('element-adv').innerText = t("🛡️ ARMOR RESISTED! 🛡️", "🛡️ 방어력에 막혔다! 🛡️");
+                    }
+
+                    showDamageText(playerDmg, eCont, isCrit);
+                    if(petDmg > 0) { setTimeout(() => { showPetDamageText(petDmg, eCont); }, 200); }
+
+                    enemy.hp -= totalDmg; updateBattleUI();
+
+                    setTimeout(() => { 
+                        eCont.classList.remove('damage-anim'); eCont.classList.remove('shake-hard');
+                        document.getElementById('element-adv').innerText = ""; 
+                        if(enemy.hp <= 0) { 
+                            // Victory flash
+                            const flash = document.getElementById('flash-overlay');
+                            flash.style.opacity = '0.5';
+                            setTimeout(() => flash.style.opacity = '0', 300);
+                            triggerConfetti();
+                            checkWin(); 
+                        } else { 
+                            enemyTurnAttack(); 
+                        }
+                    }, 600);
+                }, 500); 
+            }
+        } else {
+            player.mathStreak = Math.max(-2, player.mathStreak - 1); 
+            enemyTurnAttack();
+        }
+    }
+
+    function checkAdvantage(p, e) {
+        if(p===e) return 1;
+        if((p==='Water'&&e==='Fire')||(p==='Fire'&&e==='Earth')||(p==='Earth'&&e==='Electric')||(p==='Electric'&&e==='Water')||(p==='Air'&&e==='Earth')||(p==='Ice'&&e==='Air')) return 1.5;
+        return 0.7;
+    }
+
+    function showDamageText(amt, cont, isCrit = false) {
+        const d = document.createElement('div'); 
+        d.className = isCrit ? 'crit-text' : 'dmg-text'; 
+        d.innerText = `-${amt}`;
+        cont.appendChild(d); 
+        setTimeout(() => d.remove(), 1200);
+    }
+
+    function showPetDamageText(amt, cont) {
+        const d = document.createElement('div'); 
+        d.className = 'pet-dmg-text'; 
+        d.innerText = `🐾 -${amt}`;
+        cont.appendChild(d); 
+        setTimeout(() => d.remove(), 1200);
+    }
+
+    function triggerConfetti() {
+        const conf = document.getElementById('confetti-container');
+        conf.style.display = 'block'; 
+        conf.style.background = 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%)';
+        conf.style.animation = 'confetti 1s ease-out';
+        setTimeout(() => { 
+            conf.style.display = 'none'; 
+            conf.style.background = 'none';
+            conf.style.animation = '';
+        }, 1000);
     }
 
     function checkWin() {
         if(enemy.hp <= 0) {
-            let xpGain = 30 + player.level * 3;
-            let coinGain = 15 + Math.floor(Math.random() * 20);
-            player.xp += xpGain;
-            player.coins += coinGain;
-            player.stats.monstersCaught++; // approximate
-            showGameMessage(t(`Victory! +${xpGain} XP, +${coinGain} 🪙`, `승리! +${xpGain} XP, +${coinGain} 🪙`));
-            checkLevelUp();
-            saveGameUI();
-            if(battleMode === 'wild') {
-                document.getElementById('battle-screen').classList.add('hidden');
-                document.getElementById('overworld-screen').classList.remove('hidden');
+            let xpGained = 0;
+            let dropMsg = t("🎉 VICTORY! 🎉", "🎉 승리! 🎉");
+
+            let mathXpMult = 1.0;
+            if (selectedMathMode === 'multiplication' || selectedMathMode === 'division') mathXpMult = 1.5;
+            if (selectedMathMode === 'all') mathXpMult = 2.0;
+
+            if(battleMode === 'practice') {
+                xpGained = Math.floor(30 * mathXpMult);
+            } else if (battleMode === 'boss') {
+                xpGained = Math.floor(500 * mathXpMult); 
+                player.coins += 50; 
+                player.stats.bossesDefeated++; 
+                dropMsg = t(`👑 BOSS DEFEATED!\nEarned ${xpGained} XP and 50 🪙!`, `👑 보스 처치!\n${xpGained} 경험치와 50 🪙 획득!`);
             } else {
-                goHub();
+                let baseExp = selectedDifficulty === 'easy' ? 40 : (selectedDifficulty === 'hard' ? 200 : 100);
+                xpGained = Math.floor((baseExp + Math.floor(enemy.maxHp/3)) * mathXpMult); 
+                dropMsg = t(`Earned ${xpGained} XP!`, `${xpGained} 경험치 획득!`);
+
+                let tokenChance = selectedDifficulty === 'easy' ? 0.50 : (selectedDifficulty === 'hard' ? 0.95 : 0.75);
+                if (Math.random() < tokenChance) {
+                    let maxCoins = selectedDifficulty === 'easy' ? 5 : (selectedDifficulty === 'hard' ? 20 : 10);
+                    let coinsFound = Math.floor(Math.random() * maxCoins) + (selectedDifficulty === 'hard' ? 5 : 1); 
+                    player.coins += coinsFound;
+                    dropMsg += t(`\n🪙 Found ${coinsFound} Gold Tokens!`, `\n🪙 ${coinsFound} 골드 토큰 발견!`);
+                }
+
+                if(Math.random() < 0.35) {
+                    player.berries += 2;
+                    dropMsg += t(`\n🍒 Found Magic Berries!`, `\n🍒 마법의 열매 발견!`);
+                }
+
+                document.getElementById('map-coins').innerText = player.coins;
+            }
+
+            player.xp += xpGained;
+            player.activePets.forEach(idx => {
+                let p = player.pets[idx];
+                if(p && p.hp > 0 && !p.isEgg) {
+                    p.xp += xpGained;
+                    let petReq = p.level * 100;
+                    while(p.xp >= petReq && p.level < 250) {
+                        p.level++; p.xp -= petReq;
+                        p.maxHp += 30; p.power += 10; p.hp = p.maxHp;
+                        petReq = p.level * 100;
+                    }
+                }
+            });
+
+            if(battleMode !== 'practice') showGameMessage(dropMsg);
+
+            saveGameUI(); checkLevelUp();
+
+            if(evoQueue.length === 0) {
+                if(battleMode === 'wild') {
+                    document.getElementById('battle-screen').classList.add('hidden');
+                    document.getElementById('overworld-screen').classList.remove('hidden');
+                } else if (battleMode === 'boss') { goHub(); }
             }
         }
     }
 
-    function checkLoss() {
-        if(player.hp <= 0) {
-            showGameMessage(t("You fainted! The academy healers saved you.", "쓰러졌습니다! 아카데미 치료사들이 당신을 구했습니다."));
-            player.hp = player.maxHp;
-            goHub();
+    function checkLevelUp() {
+        let req = player.level * 150;
+        let leveledUp = false;
+        while(player.xp >= req && player.level < 250) {
+            player.level++; player.xp -= req; 
+            player.baseHp += 30; player.basePower += 15; player.sp += 1; 
+            player.hp = player.maxHp; 
+            leveledUp = true; 
+            req = player.level * 150;
+        }
+        if(leveledUp) { 
+            recalculateStats(); 
+            showGameMessage(t(`🎉 LEVEL UP! You are now Level ${player.level}/250!\n✨ You earned 1 Skill Point (SP)!`, `🎉 레벨 업! ${player.level}/250 레벨이 되었습니다!\n✨ 1 스킬 포인트 (SP) 획득!`)); 
+            saveGameUI(); 
+        }
+
+        player.pets.forEach((pet, i) => {
+            const evo = evolutions[pet.img];
+            if(evo && pet.level >= evo.reqLevel && !pet.isEgg) { 
+                evoQueue.push({ pet: pet, evoData: evo }); 
+            }
+        });
+        if(evoQueue.length > 0) processEvoQueue();
+    }
+
+    function processEvoQueue() {
+        if(evoQueue.length > 0) {
+            const current = evoQueue.shift();
+            player.stats.evolutions++; 
+
+            document.getElementById('evo-old').innerHTML = `<img src="${current.pet.img}" style="max-height:80px;" onerror="this.onerror=null; this.src=''; this.outerHTML='🐉'">`;
+            document.getElementById('evo-new').innerHTML = `<img src="${current.evoData.next}" style="max-height:80px;" onerror="this.onerror=null; this.src=''; this.outerHTML='🐲'">`;
+            document.getElementById('evo-text').innerText = t(`Your ${current.pet.name} transformed into a ${current.evoData.name}!`, `당신의 ${t(current.pet.name, current.pet.nameKo)}이(가) ${current.evoData.name}(으)로 진화했습니다!`);
+
+            current.pet.img = current.evoData.next; 
+            current.pet.name = (current.pet.isRadiant ? "✨Radiant " : "") + current.evoData.name;
+            current.pet.maxHp += current.evoData.hp; 
+            current.pet.hp = current.pet.maxHp; 
+            current.pet.power += current.evoData.pwr;
+
+            document.getElementById('evo-modal').classList.remove('hidden');
+            triggerConfetti(); saveGameUI(); 
+        } else {
+            updateBattleUI();
+            if(battleMode === 'wild' && enemy.hp <= 0) {
+                document.getElementById('battle-screen').classList.add('hidden');
+                document.getElementById('overworld-screen').classList.remove('hidden');
+            }
+            if(battleMode === 'boss' && enemy.hp <= 0) goHub();
         }
     }
 
-    function checkLevelUp() {
-        let req = player.level * 100;
-        let leveled = false;
-        while(player.xp >= req && player.level < 250) {
-            player.level++; player.xp -= req;
-            player.baseHp += 20; player.basePower += 10; player.sp++;
-            req = player.level * 100;
-            leveled = true;
-        }
-        if(leveled) {
-            showGameMessage(t(`Level up! Now level ${player.level}`, `레벨 업! 현재 레벨 ${player.level}`));
-            recalculateStats();
-        }
+    function closeEvoModal() { document.getElementById('evo-modal').classList.add('hidden'); processEvoQueue(); }
+    
+    function checkLoss() { 
+        if(player.hp <= 0) { 
+            showGameMessage(t("💔 You fainted! The academy healers saved you.", "💔 쓰러졌습니다! 아카데미 치료사들이 당신을 구했습니다.")); 
+            player.hp = player.maxHp; 
+            goHub(); 
+        } 
     }
 
     function updateBattleUI() {
+        if (!player.activePets) player.activePets = [];
         document.getElementById('player-hp-fill').style.width = Math.max(0, (player.hp/player.maxHp)*100) + "%";
         document.getElementById('enemy-hp-fill').style.width = Math.max(0, (enemy.hp/enemy.maxHp)*100) + "%";
 
         let combinedPetPwr = 0;
+
         const pet1Cont = document.getElementById('pet1-container');
         if(player.activePets[0] !== undefined && player.pets[player.activePets[0]]) {
             let p1 = player.pets[player.activePets[0]];
@@ -1709,7 +1935,10 @@
         document.getElementById('p-hp-text').innerText = `${player.hp}/${player.maxHp}`;
         document.getElementById('p-power-text').innerText = `${player.power}`;
         document.getElementById('hud-enemy-name').innerText = t(enemy.name, enemy.nameKo);
-        document.getElementById('enemy-sprite').innerHTML = `<img src="${enemy.img}" style="max-height:${enemy.isBoss?250:220}px; max-width:${enemy.isBoss?250:220}px; object-fit:contain; transform:scaleX(-1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🐉'">`;
+
+        const enemySprite = document.getElementById('enemy-sprite');
+        enemySprite.innerHTML = `<img src="${enemy.img}" style="max-height:${enemy.isBoss?250:220}px; max-width:${enemy.isBoss?250:220}px; object-fit:contain; transform:scaleX(-1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🐉'">`;
+
         document.getElementById('e-element-text').innerHTML = `${elementEmojis[enemy.element] || ''} ${translateEl(enemy.element)}`;
 
         const catchBtn = document.getElementById('catch-btn');
@@ -1718,12 +1947,35 @@
         else { catchBtn.classList.remove('glow'); }
     }
 
-    // ========== EQUIP MODAL ==========
-    function openEquipModal() {
-        document.getElementById('equip-modal').classList.remove('hidden');
-        renderEquipUI();
+    function openEquipModal() { 
+        document.getElementById('equip-modal').classList.remove('hidden'); 
+        renderEquipUI(); 
     }
-    function closeEquipModal() { document.getElementById('equip-modal').classList.add('hidden'); }
+    
+    function closeEquipModal() { 
+        document.getElementById('equip-modal').classList.add('hidden'); 
+    }
+
+    function sellItem(index) {
+        const item = player.inventory[index];
+        if(player.equipped[item.slot] && player.equipped[item.slot].id === item.id) { player.equipped[item.slot] = null; }
+
+        let sellValue = item.cost ? Math.floor(item.cost / 2) : Math.max(10, Math.floor((item.hpBonus + item.pwrBonus) / 2));
+        player.coins += sellValue;
+        player.inventory.splice(index, 1);
+
+        recalculateStats(); saveGameUI(); renderEquipUI();
+        document.getElementById('hub-coins').innerText = player.coins;
+        showGameMessage(t(`Sold ${item.name} for ${sellValue} 🪙!`, `${item.name}을(를) ${sellValue} 🪙에 판매했습니다!`));
+    }
+
+    function toggleEquip(index) {
+        const item = player.inventory[index];
+        const isEq = (player.equipped[item.slot] && player.equipped[item.slot].id === item.id);
+        player.equipped[item.slot] = isEq ? null : item; 
+        recalculateStats(); saveGameUI(); renderEquipUI();
+    }
+
     function renderEquipUI() {
         document.getElementById('eq-hp').innerText = player.maxHp;
         document.getElementById('eq-pwr').innerText = player.power;
@@ -1732,6 +1984,7 @@
 
         const hatSlot = document.getElementById('eq-slot-hat');
         const wpnSlot = document.getElementById('eq-slot-weapon');
+
         hatSlot.innerHTML = player.equipped.hat ? player.equipped.hat.emoji : '<span style="opacity:0.3">🎩</span>';
         hatSlot.className = player.equipped.hat ? 'equip-slot filled' : 'equip-slot';
         wpnSlot.innerHTML = player.equipped.weapon ? player.equipped.weapon.emoji : '<span style="opacity:0.3">🪄</span>';
@@ -1743,10 +1996,12 @@
             list.innerHTML = `<p style='text-align:center; color:#7F8FA6; font-size: 20px; margin-top: 50px;'>${t("Your backpack is empty!<br>Defeat monsters to find gear.", "가방이 비어있습니다!<br>몬스터를 처치하여 장비를 얻으세요.")}</p>`;
             return;
         }
+
         player.inventory.forEach((item, i) => {
             const isEq = (player.equipped[item.slot] && player.equipped[item.slot].id === item.id);
             const row = document.createElement('div');
             row.className = `inv-item-row ${isEq ? 'equipped' : ''}`;
+
             row.innerHTML = `
                 <div style="font-size:35px; margin-right:15px; width: 50px; text-align: center;" onclick="toggleEquip(${i})">${item.emoji}</div>
                 <div style="flex-grow:1; line-height:1.2; cursor: pointer;" onclick="toggleEquip(${i})">
@@ -1761,36 +2016,7 @@
             list.appendChild(row);
         });
     }
-    function toggleEquip(index) {
-        const item = player.inventory[index];
-        const isEq = (player.equipped[item.slot] && player.equipped[item.slot].id === item.id);
-        player.equipped[item.slot] = isEq ? null : item; 
-        recalculateStats(); saveGameUI(); renderEquipUI();
-    }
-    function sellItem(index) {
-        const item = player.inventory[index];
-        if(player.equipped[item.slot] && player.equipped[item.slot].id === item.id) player.equipped[item.slot] = null;
-        let sellValue = item.cost ? Math.floor(item.cost / 2) : Math.max(5, Math.floor((item.hpBonus + item.pwrBonus) / 2));
-        player.coins += sellValue;
-        player.inventory.splice(index, 1);
-        recalculateStats(); saveGameUI(); renderEquipUI();
-        document.getElementById('hub-coins').innerText = player.coins;
-        showGameMessage(t(`Sold ${item.name} for ${sellValue} 🪙!`, `${item.name}을(를) ${sellValue} 🪙에 판매했습니다!`));
-    }
-    function recalculateStats() {
-        let eHp=0, ePwr=0;
-        if(player.equipped.hat){ eHp+=player.equipped.hat.hpBonus; ePwr+=player.equipped.hat.pwrBonus; }
-        if(player.equipped.weapon){ eHp+=player.equipped.weapon.hpBonus; ePwr+=player.equipped.weapon.pwrBonus; }
-        player.maxHp = player.baseHp + eHp; player.power = player.basePower + ePwr;
-        if(player.hp > player.maxHp) player.hp = player.maxHp;
-        const vHat = document.getElementById('vis-hat'); const vWpn = document.getElementById('vis-weapon');
-        if(vHat) vHat.innerText = player.equipped.hat ? player.equipped.hat.emoji : "";
-        if(vWpn) vWpn.innerText = player.equipped.weapon ? player.equipped.weapon.emoji : "";
-        if (!document.getElementById('battle-screen').classList.contains('hidden')) updateBattleUI();
-        if (!document.getElementById('arena-screen').classList.contains('hidden')) updateArenaUI();
-    }
 
-    // ========== PETS MENU ==========
     function togglePet(i) {
         const isEq = player.activePets.includes(i);
         const isFainted = player.pets[i].hp <= 0;
@@ -1800,24 +2026,20 @@
             if(player.activePets.length >= 2) { showGameMessage(t("You can only have 2 active pets!", "활성화된 펫은 2마리까지만 가능합니다!")); return; }
             player.activePets.push(i);
         }
-        saveGameUI(); 
-        if (!document.getElementById('battle-screen').classList.contains('hidden')) updateBattleUI();
-        if (!document.getElementById('arena-screen').classList.contains('hidden')) updateArenaUI();
-        openMenu('pets');
+        updateBattleUI(); openMenu('pets'); saveGameUI(); 
     }
+
     function releasePet(index) {
         const petName = t(player.pets[index].name, player.pets[index].nameKo);
         if(confirm(t(`Are you sure you want to release ${petName} back into the wild? This cannot be undone!`, `정말로 ${petName}을(를) 야생으로 방생하시겠습니까? 되돌릴 수 없습니다!`))) {
             const activeIdx = player.activePets.indexOf(index);
             if(activeIdx > -1) { player.activePets.splice(activeIdx, 1); }
-            for(let i=0; i<player.activePets.length; i++) { if(player.activePets[i] > index) player.activePets[i]--; }
+            for(let i=0; i<player.activePets.length; i++) { if(player.activePets[i] > index) { player.activePets[i]--; } }
             player.pets.splice(index, 1);
-            saveGameUI();
-            if (!document.getElementById('battle-screen').classList.contains('hidden')) updateBattleUI();
-            if (!document.getElementById('arena-screen').classList.contains('hidden')) updateArenaUI();
-            openMenu('pets');
+            updateBattleUI(); openMenu('pets'); saveGameUI();
         }
     }
+
     function feedBerry(index) {
         if(player.berries > 0 && player.pets[index].happiness < 100) {
             player.berries--;
@@ -1828,6 +2050,7 @@
             showGameMessage(t(`${player.pets[index].name} is already completely full of love! ❤️`, `${t(player.pets[index].name, player.pets[index].nameKo)}은(는) 이미 사랑으로 가득 찼습니다! ❤️`));
         }
     }
+
     function buyEgg() {
         if(player.coins >= 20) {
             player.coins -= 20;
@@ -1840,25 +2063,7 @@
             document.getElementById('hub-coins').innerText = player.coins;
         } else { showGameMessage(t("You need 20 🪙 to buy an egg!", "알을 사려면 20 🪙이 필요합니다!")); }
     }
-    function hatchEgg(pet) {
-        let pool = Math.random() < 0.2 ? bossPool : monsterPool; 
-        let m = pool[Math.floor(Math.random() * pool.length)];
-        let isRad = Math.random() < 0.1; 
-        pet.isEgg = false;
-        pet.img = m.img;
-        pet.name = (isRad ? "✨Radiant " : "") + (m.name || "Monster");
-        pet.nameKo = (isRad ? "✨빛나는 " : "") + (m.nameKo || "몬스터");
-        pet.element = m.type || m.element;
-        pet.isRadiant = isRad;
-        pet.power = isRad ? 50 : 30; 
-        pet.maxHp = isRad ? 200 : 150;
-        pet.hp = pet.maxHp;
-        pet.level = 1;
-        pet.xp = 0;
-        showGameMessage(t(`🎉 Your Mystery Egg hatched into a ${pet.name}!`, `🎉 신비한 알에서 ${pet.nameKo}이(가) 부화했습니다!`));
-    }
 
-    // ========== MENU (Pets, Shop, Skills, Stickers) ==========
     function openMenu(type) {
         const modal = document.getElementById('menu-modal');
         const grid = document.getElementById('menu-grid');
@@ -1975,6 +2180,15 @@
         else if (type === 'stickers') {
             document.getElementById('menu-title').innerText = t("🏆 Sticker Book", "🏆 스티커 북");
             
+            const achievementsList = [
+                { id: 'math10', text: 'Math Learner (Solve 10)', textKo: '수학 초보 (10문제 풀기)', type: 'mathSolved', req: 10, reward: 10 },
+                { id: 'math50', text: 'Math Whiz I (Solve 50)', textKo: '수학 천재 I (50문제 풀기)', type: 'mathSolved', req: 50, reward: 25 },
+                { id: 'math100', text: 'Math Whiz II (Solve 100)', textKo: '수학 천재 II (100문제 풀기)', type: 'mathSolved', req: 100, reward: 50 },
+                { id: 'catch5', text: 'Novice Catcher (Catch 5)', textKo: '초보 조련사 (5마리 포획)', type: 'monstersCaught', req: 5, reward: 10 },
+                { id: 'catch10', text: 'Catcher I (Catch 10)', textKo: '조련사 I (10마리 포획)', type: 'monstersCaught', req: 10, reward: 30 },
+                { id: 'boss1', text: 'Giant Slayer I (1 Boss)', textKo: '거인 학살자 I (보스 1마리)', type: 'bossesDefeated', req: 1, reward: 50 }
+            ];
+
             achievementsList.forEach(ach => {
                 const d = document.createElement('div'); 
                 const progress = player.stats[ach.type] || 0;
@@ -1996,7 +2210,7 @@
             });
         }
     }
-    function closeMenu() { document.getElementById('menu-modal').classList.add('hidden'); }
+
     function claimAchievement(id, reward) {
         player.achievements[id] = true;
         player.coins += reward;
@@ -2004,6 +2218,7 @@
         showGameMessage(t(`🏆 Achievement Unlocked! You earned ${reward} 🪙!`, `🏆 업적 달성! ${reward} 🪙 획득!`));
         document.getElementById('hub-coins').innerText = player.coins;
     }
+
     function upgradeSpell(index) {
         if(player.sp >= 1) {
             player.sp -= 1; 
@@ -2012,7 +2227,9 @@
             saveGameUI(); openMenu('skills'); triggerConfetti();
         } else { showGameMessage(t("You need 1 SP to upgrade! Keep leveling up.", "강화하려면 1 SP가 필요합니다! 레벨을 올리세요.")); }
     }
+
     function equipSpell(index) { player.activeSpell = index; saveGameUI(); openMenu('skills'); }
+
     function buyItem(idx) {
         const item = shopItems[idx];
         if(player.coins >= item.cost) {
@@ -2025,22 +2242,52 @@
         } else { showGameMessage(t(`You need ${item.cost - player.coins} more 🪙 to buy this!`, `구매하려면 ${item.cost - player.coins} 🪙이 더 필요합니다!`)); }
     }
 
-    // ========== POKEDEX ==========
+    function closeMenu() { document.getElementById('menu-modal').classList.add('hidden'); }
+
+    function recalculateStats() {
+        let eHp=0, ePwr=0;
+        if(player.equipped.hat){ eHp+=player.equipped.hat.hpBonus; ePwr+=player.equipped.hat.pwrBonus; }
+        if(player.equipped.weapon){ eHp+=player.equipped.weapon.hpBonus; ePwr+=player.equipped.weapon.pwrBonus; }
+        player.maxHp = player.baseHp + eHp; player.power = player.basePower + ePwr;
+        if(player.hp > player.maxHp) player.hp = player.maxHp;
+
+        const vHat = document.getElementById('vis-hat'); const vWpn = document.getElementById('vis-weapon');
+        if(vHat) vHat.innerText = player.equipped.hat ? player.equipped.hat.emoji : "";
+        if(vWpn) vWpn.innerText = player.equipped.weapon ? player.equipped.weapon.emoji : "";
+        updateBattleUI();
+    }
+
+    // --- POKEDEX SYSTEM ---
     function trackPokedexEncounter(mon, biomeName) {
         if(!player.pokedex) player.pokedex = {};
         const key = mon.name;
         if(!player.pokedex[key]) {
             player.pokedex[key] = {
-                name: mon.name, nameKo: mon.nameKo || mon.name, img: mon.img,
-                element: mon.type || mon.element, totalEncounters: 0, biomes: {}, caught: false
+                name: mon.name,
+                nameKo: mon.nameKo || mon.name,
+                img: mon.img,
+                element: mon.type || mon.element,
+                totalEncounters: 0,
+                biomes: {},
+                caught: false
             };
         }
         player.pokedex[key].totalEncounters++;
-        if(biomeName) player.pokedex[key].biomes[biomeName] = (player.pokedex[key].biomes[biomeName] || 0) + 1;
+        if(biomeName) {
+            player.pokedex[key].biomes[biomeName] = (player.pokedex[key].biomes[biomeName] || 0) + 1;
+        }
         saveGameUI();
     }
-    function openPokedex() { document.getElementById('pokedex-modal').classList.remove('hidden'); filterPokedex(); }
-    function closePokedex() { document.getElementById('pokedex-modal').classList.add('hidden'); }
+
+    function openPokedex() {
+        document.getElementById('pokedex-modal').classList.remove('hidden');
+        filterPokedex();
+    }
+
+    function closePokedex() {
+        document.getElementById('pokedex-modal').classList.add('hidden');
+    }
+
     function filterPokedex() {
         const searchTerm = document.getElementById('pokedex-search').value.toLowerCase();
         const filter = document.getElementById('pokedex-filter').value;
@@ -2048,6 +2295,7 @@
         grid.innerHTML = "";
 
         let entries = Object.values(player.pokedex || {});
+
         entries = entries.filter(entry => {
             if (filter === 'water' && entry.element !== 'Water') return false;
             if (filter === 'fire' && entry.element !== 'Fire') return false;
@@ -2094,473 +2342,14 @@
         });
     }
 
-    // ========== SETUP ==========
-    function openSetupModal(mode) {
-        setupMode = mode;
-        document.getElementById('setup-modal').classList.remove('hidden');
-        const grid = document.getElementById('map-grid');
-        const title = document.getElementById('setup-title');
-        const startBtn = document.getElementById('setup-start-btn');
-        if (mode === 'wild') {
-            title.innerText = t("🗺️ Choose Destination", "🗺️ 목적지 선택");
-            grid.style.display = "grid";
-            startBtn.innerText = t("Start Expedition!", "탐험 시작!");
-            startBtn.onclick = startExpedition;
-            grid.innerHTML = "";
-            biomes.forEach((biome, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'btn-primary';
-                btn.style.fontSize = '14px'; btn.style.padding = '8px';
-                btn.style.opacity = selectedBiomeIndex === index ? '1' : '0.6';
-                btn.style.borderColor = selectedBiomeIndex === index ? 'var(--gold)' : 'white';
-                btn.innerHTML = `${biome.decorations[0]} ${t(biome.name, biome.nameKo)}`;
-                btn.onclick = () => { selectedBiomeIndex = index; openSetupModal('wild'); };
-                grid.appendChild(btn);
-            });
-        } else if (mode === 'dojo') {
-            title.innerText = t("🎯 Dojo Setup", "🎯 훈련장 설정");
-            grid.style.display = "none";
-            startBtn.innerText = t("Start Practice!", "훈련 시작!");
-            startBtn.onclick = startDojo;
-        }
-    }
-    function closeSetupModal() { document.getElementById('setup-modal').classList.add('hidden'); }
-    function setMathMode(mode) {
-        selectedMathMode = mode;
-        document.getElementById('btn-math-add').style.opacity = mode === 'addition' ? '1' : '0.5';
-        document.getElementById('btn-math-sub').style.opacity = mode === 'subtraction' ? '1' : '0.5';
-        document.getElementById('btn-math-both').style.opacity = mode === 'both' ? '1' : '0.5';
-        document.getElementById('btn-math-mul').style.opacity = mode === 'multiplication' ? '1' : '0.5';
-        document.getElementById('btn-math-div').style.opacity = mode === 'division' ? '1' : '0.5';
-        document.getElementById('btn-math-all').style.opacity = mode === 'all' ? '1' : '0.5';
-    }
-    function setDifficulty(diff) {
-        selectedDifficulty = diff;
-        document.getElementById('btn-diff-easy').style.opacity = diff === 'easy' ? '1' : '0.5';
-        document.getElementById('btn-diff-medium').style.opacity = diff === 'medium' ? '1' : '0.5';
-        document.getElementById('btn-diff-hard').style.opacity = diff === 'hard' ? '1' : '0.5';
-    }
-    function startExpedition() { closeSetupModal(); currentBiome = biomes[selectedBiomeIndex]; enterOverworld(); }
-    function startDojo() { closeSetupModal(); enterBattle('practice'); }
-
-    // ========== BOSS ==========
-    function openBossSelect() { document.getElementById('boss-select-modal').classList.remove('hidden'); }
-    function closeBossSelect() { document.getElementById('boss-select-modal').classList.add('hidden'); }
-    function startBossBattle(element) { selectedBossElement = element; closeBossSelect(); enterBattle('boss'); }
-
-    // ========== ARENA ==========
-    function openArenaSetup() {
-        document.getElementById('arena-setup-modal').classList.remove('hidden');
-        setArenaMath('addition');
-    }
-    function closeArenaSetup() { document.getElementById('arena-setup-modal').classList.add('hidden'); }
-    function setArenaMath(mode) {
-        arenaMathMode = mode;
-        document.getElementById('arena-math-add').style.opacity = mode === 'addition' ? '1' : '0.5';
-        document.getElementById('arena-math-sub').style.opacity = mode === 'subtraction' ? '1' : '0.5';
-        document.getElementById('arena-math-mul').style.opacity = mode === 'multiplication' ? '1' : '0.5';
-        document.getElementById('arena-math-div').style.opacity = mode === 'division' ? '1' : '0.5';
-    }
-    function generateArenaOpponent() {
-        let level = player.level;
-        let opponentPets = [];
-        for (let i = 0; i < 2; i++) {
-            let baseMonster = monsterPool[Math.floor(Math.random() * monsterPool.length)];
-            opponentPets.push({
-                img: baseMonster.img,
-                element: baseMonster.type,
-                name: baseMonster.name,
-                nameKo: baseMonster.nameKo,
-                level: level,
-                maxHp: 100 + level * 15,
-                hp: 100 + level * 15,
-                power: 20 + level * 5,
-                isRadiant: false
-            });
-        }
-        return { name: "Mage Opponent", nameKo: "마법사 상대", pets: opponentPets, activePets: [0, 1] };
-    }
-    function startArenaBattle() {
-        closeArenaSetup();
-        arenaOpponent = generateArenaOpponent();
-        document.getElementById('hub-screen').classList.add('hidden');
-        document.getElementById('battle-screen').classList.add('hidden');
-        document.getElementById('overworld-screen').classList.add('hidden');
-        document.getElementById('arena-screen').classList.remove('hidden');
-        document.getElementById('arena-player-name').innerText = player.name;
-        document.getElementById('arena-player-sprite').innerHTML = `<img src="${player.avatar}" style="max-height:200px; max-width:200px; object-fit:contain; transform:scaleX(1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙‍♂️'">`;
-        const spell = skillTrees[player.element][player.activeSpell];
-        if (spell) {
-            document.getElementById('arena-spell-btn-container').innerHTML = `
-                <button class="btn-primary spell-btn" style="background: ${spell.color}; box-shadow: 0 8px 0 ${spell.shadow}; font-size: 22px; padding: 10px 30px;" onclick="openArenaMathModal()">
-                    <span style="font-size: 26px;">${spell.icon}</span> ${t('CAST', '시전')} ${t(spell.name, spell.nameKo)}
-                </button>`;
-        }
-        updateArenaUI();
-    }
-    function fleeArena() {
-        if (confirm(t("Surrender? You will not receive any rewards.", "항복하시겠습니까? 보상을 받을 수 없습니다."))) {
-            goHub();
-        }
-    }
-    function updateArenaUI() {
-        if (!arenaOpponent) return;
-        document.getElementById('arena-player-hp-fill').style.width = Math.max(0, (player.hp/player.maxHp)*100) + "%";
-        document.getElementById('arena-p-hp-text').innerText = `${player.hp}/${player.maxHp}`;
-        document.getElementById('arena-p-power-text').innerText = player.power;
-
-        let oppPet = arenaOpponent.pets[arenaOpponent.activePets[0]];
-        document.getElementById('arena-enemy-hp-fill').style.width = Math.max(0, (oppPet.hp/oppPet.maxHp)*100) + "%";
-        document.getElementById('arena-enemy-name').innerText = oppPet.name;
-        document.getElementById('arena-e-element-text').innerHTML = `${elementEmojis[oppPet.element] || ''} ${translateEl(oppPet.element)}`;
-        document.getElementById('arena-enemy-sprite').innerHTML = `<img src="${oppPet.img}" style="max-height:250px; max-width:250px; object-fit:contain; transform:scaleX(-1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🐉'">`;
-
-        if (player.activePets[0] !== undefined && player.pets[player.activePets[0]]) {
-            let p1 = player.pets[player.activePets[0]];
-            document.getElementById('arena-pet1-sprite').innerHTML = `<img src="${p1.img}" style="max-height:150px; max-width:150px; object-fit:contain;" onerror="this.onerror=null; this.src=''; this.outerHTML='🐉'">`;
-            document.getElementById('arena-pet1-container').classList.remove('hidden');
-        } else { document.getElementById('arena-pet1-container').classList.add('hidden'); }
-        if (player.activePets[1] !== undefined && player.pets[player.activePets[1]]) {
-            let p2 = player.pets[player.activePets[1]];
-            document.getElementById('arena-pet2-sprite').innerHTML = `<img src="${p2.img}" style="max-height:150px; max-width:150px; object-fit:contain;" onerror="this.onerror=null; this.src=''; this.outerHTML='🐉'">`;
-            document.getElementById('arena-pet2-container').classList.remove('hidden');
-        } else { document.getElementById('arena-pet2-container').classList.add('hidden'); }
-    }
-    function openArenaMathModal() {
-        currentAction = 'attack';
-        document.getElementById('math-modal').classList.remove('hidden');
-        const title = document.getElementById('math-title');
-        title.innerText = t("Solve to Attack in Arena!", "아레나에서 공격하려면 문제를 푸세요!");
-        title.style.color = "var(--btn-blue)";
-
-        let currentType = arenaMathMode;
-        let p1, p2, whole;
-        let maxNum = 10 + player.level;
-        if (selectedDifficulty === 'easy') maxNum = Math.max(5, maxNum - 5);
-        if (selectedDifficulty === 'hard') maxNum += 10;
-        maxNum = Math.min(100, maxNum);
-
-        if (currentType === 'addition' || currentType === 'subtraction') {
-            whole = Math.floor(Math.random() * maxNum) + 5;
-            p1 = Math.floor(Math.random() * (whole - 1)) + 1;
-            p2 = whole - p1;
-        } else {
-            let maxFactor = Math.min(10, Math.floor(maxNum / 5) + 3);
-            let a = Math.floor(Math.random() * maxFactor) + 1;
-            let b = Math.floor(Math.random() * maxFactor) + 1;
-            p1 = a; p2 = b; whole = a * b;
-        }
-
-        const inputHtml = `<input id="ans" type="number" autocomplete="off">`;
-        const b1 = document.getElementById('box1');
-        const b2 = document.getElementById('box2');
-        const b3 = document.getElementById('box3');
-        const op = document.getElementById('math-op');
-        let blankPos = Math.floor(Math.random() * 3);
-
-        if (currentType === 'addition' || currentType === 'multiplication') {
-            op.innerText = currentType === 'addition' ? "+" : "×";
-            b1.className = "circle part"; b2.className = "circle part"; b3.className = "circle whole";
-            currentMathAnswer = (blankPos === 0) ? p1 : (blankPos === 1) ? p2 : whole;
-            b1.innerHTML = blankPos === 0 ? inputHtml : p1;
-            b2.innerHTML = blankPos === 1 ? inputHtml : p2;
-            b3.innerHTML = blankPos === 2 ? inputHtml : whole;
-        } else {
-            op.innerText = currentType === 'subtraction' ? "-" : "÷";
-            b1.className = "circle whole"; b2.className = "circle part"; b3.className = "circle part";
-            currentMathAnswer = (blankPos === 0) ? whole : (blankPos === 1) ? p1 : p2;
-            b1.innerHTML = blankPos === 0 ? inputHtml : whole;
-            b2.innerHTML = blankPos === 1 ? inputHtml : p1;
-            b3.innerHTML = blankPos === 2 ? inputHtml : p2;
-        }
-        problemStartTime = Date.now();
-        const ansInput = document.getElementById('ans');
-        if (ansInput) {
-            ansInput.removeEventListener('keydown', mathEnterHandler);
-            ansInput.addEventListener('keydown', mathEnterHandler);
-            setTimeout(() => ansInput.focus(), 100);
-        }
-    }
-    function shootArenaProjectile() {
-        const stage = document.getElementById('arena-stage');
-        const proj = document.createElement('div');
-        proj.className = 'magic-projectile ' + player.element.toLowerCase();
-        const spell = skillTrees[player.element][player.activeSpell];
-        proj.innerText = spell ? spell.icon : '✨';
-        proj.style.left = '150px'; proj.style.bottom = '80px';
-        stage.appendChild(proj);
-        setTimeout(() => { proj.style.left = '650px'; proj.style.transform = 'scale(1.5)'; }, 50);
-        setTimeout(() => { proj.style.transform = 'scale(2)'; proj.style.filter = 'drop-shadow(0 0 40px orange)'; }, 200);
-        setTimeout(() => { proj.remove(); const flash = document.getElementById('flash-overlay'); flash.style.opacity = '0.8'; setTimeout(() => flash.style.opacity = '0', 100); }, 450);
-    }
-    function arenaAttack(isCrit) {
-        let oppPet = arenaOpponent.pets[arenaOpponent.activePets[0]];
-        let elMult = checkAdvantage(player.element, oppPet.element);
-        let playerDmg = Math.floor(getTruePlayerPower() * elMult);
-        if(isCrit) playerDmg *= 2;
-        let petDmg = Math.floor(getPetPower() * elMult);
-        if(isCrit) petDmg = Math.floor(petDmg * 1.5);
-
-        document.getElementById('arena-player-container').classList.add('attack-anim');
-        if(!document.getElementById('arena-pet1-container').classList.contains('hidden')) 
-            document.getElementById('arena-pet1-container').classList.add('attack-anim');
-        if(!document.getElementById('arena-pet2-container').classList.contains('hidden')) 
-            document.getElementById('arena-pet2-container').classList.add('attack-anim');
-        
-        shootArenaProjectile();
-
-        setTimeout(() => {
-            document.getElementById('arena-player-container').classList.remove('attack-anim');
-            document.getElementById('arena-pet1-container').classList.remove('attack-anim');
-            document.getElementById('arena-pet2-container').classList.remove('attack-anim');
-
-            let eCont = document.getElementById('arena-enemy-container');
-            if(isCrit) {
-                eCont.classList.add('shake-hard');
-                triggerConfetti();
-                document.getElementById('arena-element-adv').innerText = t("💥 CRITICAL HIT! 💥", "💥 크리티컬 히트! 💥");
-            } else {
-                eCont.classList.add('damage-anim');
-                if(elMult > 1) document.getElementById('arena-element-adv').innerText = t("⭐ SUPER EFFECTIVE! ⭐", "⭐ 효과가 굉장히 뛰어났다! ⭐");
-            }
-
-            showDamageText(playerDmg, eCont, isCrit);
-            if(petDmg > 0) setTimeout(() => showPetDamageText(petDmg, eCont), 200);
-
-            oppPet.hp -= playerDmg + petDmg;
-            if (oppPet.hp < 0) oppPet.hp = 0;
-            updateArenaUI();
-
-            setTimeout(() => {
-                eCont.classList.remove('damage-anim'); eCont.classList.remove('shake-hard');
-                document.getElementById('arena-element-adv').innerText = "";
-                if (oppPet.hp <= 0) {
-                    showGameMessage(t(`Opponent's ${oppPet.name} fainted!`, `상대의 ${oppPet.nameKo}이(가) 쓰러졌습니다!`));
-                    arenaOpponent.activePets.shift();
-                    if (arenaOpponent.activePets.length === 0) {
-                        arenaWin();
-                        return; // exit to prevent further execution
-                    } else {
-                        updateArenaUI();
-                        arenaEnemyTurn();
-                    }
-                } else {
-                    arenaEnemyTurn();
-                }
-            }, 600);
-        }, 500);
-    }
-    function arenaEnemyTurn() {
-        if (arenaOpponent.activePets.length === 0) return;
-        let oppPet = arenaOpponent.pets[arenaOpponent.activePets[0]];
-        let pCont = document.getElementById('arena-player-container');
-        let eCont = document.getElementById('arena-enemy-container');
-
-        eCont.style.transform = "translateX(-80px) scale(1.2)";
-        eCont.style.filter = "brightness(1.5) drop-shadow(0 0 30px red)";
-        
-        setTimeout(() => {
-            eCont.style.transform = "translateX(0) scale(1)";
-            eCont.style.filter = "none";
-            pCont.classList.add('damage-anim');
-            
-            const flash = document.getElementById('flash-overlay');
-            flash.style.opacity = '0.5';
-            setTimeout(() => flash.style.opacity = '0', 200);
-
-            let dmgRemaining = oppPet.power;
-            if(player.activePets) {
-                for(let i=0; i<player.activePets.length; i++) {
-                    let petIdx = player.activePets[i];
-                    let pet = player.pets[petIdx];
-                    if(pet && pet.hp > 0 && !pet.isEgg && dmgRemaining > 0) {
-                        let dmgToPet = Math.min(pet.hp, dmgRemaining);
-                        pet.hp -= dmgToPet; dmgRemaining -= dmgToPet;
-                        let petContId = i === 0 ? 'arena-pet1-container' : 'arena-pet2-container';
-                        showDamageText(dmgToPet, document.getElementById(petContId), false);
-
-                        if(pet.hp <= 0 && pet.happiness >= 80 && Math.random() < 0.25) {
-                            pet.hp = 1;
-                            setTimeout(() => showGameMessage(t(`❤️ ${pet.name} held on with 1 HP out of love for you!`, `❤️ ${t(pet.name, pet.nameKo)}이(가) 당신을 향한 사랑으로 1 HP를 남기고 버텼습니다!`)), 500);
-                        } else if (pet.hp <= 0) {
-                            setTimeout(() => showGameMessage(t(`Oh no! ${pet.name} fainted!`, `앗! ${t(pet.name, pet.nameKo)}이(가) 쓰러졌습니다!`)), 500);
-                        }
-                    }
-                }
-            }
-            if(dmgRemaining > 0) { 
-                player.hp -= dmgRemaining; 
-                showDamageText(dmgRemaining, pCont, false); 
-            }
-            updateArenaUI();
-            setTimeout(() => { 
-                pCont.classList.remove('damage-anim'); 
-                if (player.hp <= 0) arenaLoss();
-            }, 500);
-        }, 300);
-    }
-    function arenaWin() {
-        let xpGain = 150 + player.level * 5;
-        let coinGain = 50 + Math.floor(Math.random() * 50);
-        player.xp += xpGain;
-        player.coins += coinGain;
-        player.stats.arenaWins = (player.stats.arenaWins || 0) + 1;
-        player.arenaWinStreak = (player.arenaWinStreak || 0) + 1;
-        showGameMessage(t(`🎉 VICTORY! +${xpGain} XP, +${coinGain} 🪙`, `🎉 승리! +${xpGain} XP, +${coinGain} 🪙`));
-        checkLevelUp();
-        saveGameUI();
-        goHub();
-    }
-    function arenaLoss() {
-        showGameMessage(t("💔 You lost the arena battle. Better luck next time!", "💔 아레나 배틀에서 졌습니다. 다음에 다시 도전하세요!"));
-        player.arenaWinStreak = 0;
-        player.hp = player.maxHp;
-        goHub();
-    }
-
-    // ========== CRAFTING ==========
-    function openCrafting() {
-        document.getElementById('crafting-modal').classList.remove('hidden');
-        craftSlot1 = null; craftSlot2 = null;
-        document.getElementById('craft-slot-1').innerHTML = '❓';
-        document.getElementById('craft-slot-2').innerHTML = '❓';
-        document.getElementById('craft-result').innerHTML = '❓';
-        renderCraftingInventory();
-    }
-    function closeCrafting() { document.getElementById('crafting-modal').classList.add('hidden'); }
-    function renderCraftingInventory() {
-        const invDiv = document.getElementById('crafting-inventory');
-        invDiv.innerHTML = '';
-        player.inventory.forEach((item, index) => {
-            const btn = document.createElement('button');
-            btn.className = 'btn-primary';
-            btn.style.fontSize = '12px';
-            btn.style.padding = '5px';
-            btn.innerHTML = `${item.emoji} ${item.name}`;
-            btn.onclick = () => selectCraftItem(index);
-            invDiv.appendChild(btn);
-        });
-    }
-    function selectCraftItem(index) {
-        if (!craftSlot1) {
-            craftSlot1 = player.inventory[index];
-            document.getElementById('craft-slot-1').innerHTML = craftSlot1.emoji;
-        } else if (!craftSlot2) {
-            craftSlot2 = player.inventory[index];
-            document.getElementById('craft-slot-2').innerHTML = craftSlot2.emoji;
-        }
-        if (craftSlot1 && craftSlot2) {
-            for (let recipe of craftingRecipes) {
-                if (craftSlot1.slot === recipe.slot1 && craftSlot2.slot === recipe.slot2 ||
-                    craftSlot1.slot === recipe.slot2 && craftSlot2.slot === recipe.slot1) {
-                    document.getElementById('craft-result').innerHTML = recipe.result.emoji;
-                    return;
-                }
-            }
-            document.getElementById('craft-result').innerHTML = '❌';
-        }
-    }
-    function craftItems() {
-        if (!craftSlot1 || !craftSlot2) { alert(t("Select two items!", "두 아이템을 선택하세요!")); return; }
-        let resultItem = null;
-        for (let recipe of craftingRecipes) {
-            if (craftSlot1.slot === recipe.slot1 && craftSlot2.slot === recipe.slot2 ||
-                craftSlot1.slot === recipe.slot2 && craftSlot2.slot === recipe.slot1) {
-                resultItem = { ...recipe.result, id: Date.now() };
-                break;
-            }
-        }
-        if (!resultItem) { alert(t("No valid recipe!", "유효한 조합이 아닙니다!")); return; }
-        player.inventory = player.inventory.filter(item => item.id !== craftSlot1.id && item.id !== craftSlot2.id);
-        player.inventory.push(resultItem);
-        saveGameUI();
-        alert(t(`Crafted ${resultItem.name}!`, `${resultItem.name} 제작 완료!`));
-        closeCrafting();
-    }
-
-    // ========== BREEDING ==========
-    function openBreeding() {
-        if (player.pets.length < 2) { alert(t("You need at least 2 pets to breed!", "교배하려면 최소 2마리의 펫이 필요합니다!")); return; }
-        document.getElementById('breeding-modal').classList.remove('hidden');
-        breedingSelected = [];
-        renderBreedingList();
-        document.getElementById('breeding-selected').innerText = t("None", "없음");
-    }
-    function closeBreeding() { document.getElementById('breeding-modal').classList.add('hidden'); }
-    function renderBreedingList() {
-        const list = document.getElementById('breeding-pet-list');
-        list.innerHTML = '';
-        player.pets.forEach((pet, index) => {
-            if (pet.isEgg) return;
-            const card = document.createElement('div');
-            card.className = `card ${breedingSelected.includes(index) ? 'active' : ''}`;
-            card.innerHTML = `<img src="${pet.img}" style="max-height:50px;"><br>${t(pet.name, pet.nameKo)} (Lvl ${pet.level})`;
-            card.onclick = () => toggleBreedSelection(index);
-            list.appendChild(card);
-        });
-    }
-    function toggleBreedSelection(index) {
-        if (breedingSelected.includes(index)) {
-            breedingSelected = breedingSelected.filter(i => i !== index);
-        } else {
-            if (breedingSelected.length >= 2) { alert(t("Select only two pets!", "두 마리만 선택하세요!")); return; }
-            breedingSelected.push(index);
-        }
-        renderBreedingList();
-        if (breedingSelected.length === 2) {
-            let p1 = player.pets[breedingSelected[0]];
-            let p2 = player.pets[breedingSelected[1]];
-            document.getElementById('breeding-selected').innerText = `${t(p1.name, p1.nameKo)} + ${t(p2.name, p2.nameKo)}`;
-        } else {
-            document.getElementById('breeding-selected').innerText = t("None", "없음");
-        }
-    }
-    function breedPets() {
-        if (breedingSelected.length !== 2) { alert(t("Select two pets!", "두 마리를 선택하세요!")); return; }
-        let pet1 = player.pets[breedingSelected[0]];
-        let pet2 = player.pets[breedingSelected[1]];
-        let newElement = Math.random() < 0.5 ? pet1.element : pet2.element;
-        let newName = t("Hybrid", "하이브리드");
-        let newImg = pet1.img;
-        let newPet = {
-            img: newImg,
-            element: newElement,
-            name: newName,
-            nameKo: newName,
-            level: 1,
-            xp: 0,
-            maxHp: Math.floor((pet1.maxHp + pet2.maxHp) / 2),
-            hp: Math.floor((pet1.maxHp + pet2.maxHp) / 2),
-            power: Math.floor((pet1.power + pet2.power) / 2),
-            happiness: 50,
-            isRadiant: (pet1.isRadiant || pet2.isRadiant) && Math.random() < 0.3
-        };
-        player.pets.push(newPet);
-        saveGameUI();
-        alert(t(`New hybrid created!`, `새 하이브리드가 탄생했습니다!`));
-        closeBreeding();
-    }
-
-    // ========== LEADERBOARD (stub) ==========
-    function openLeaderboard() {
-        let leaderboard = JSON.parse(localStorage.getItem('chgp_leaderboard') || '[]');
-        let html = '';
-        leaderboard.forEach((entry, i) => {
-            html += `<div class="leaderboard-entry"><span>${i+1}. ${entry.name}</span><span>🔥 ${entry.streak}</span><span>${entry.date}</span></div>`;
-        });
-        if (html === '') html = '<p>No entries yet.</p>';
-        document.getElementById('leaderboard-list').innerHTML = html;
-        document.getElementById('leaderboard-modal').classList.remove('hidden');
-    }
-    function closeLeaderboard() { document.getElementById('leaderboard-modal').classList.add('hidden'); }
-
-    // ========== KEYBOARD ==========
+    // --- KEYBOARD CONTROLS ---
     document.addEventListener('keydown', function(e) {
         const overworld = document.getElementById('overworld-screen');
         if (!overworld.classList.contains('hidden') && 
             document.querySelectorAll('.modal-overlay:not(.hidden)').length === 0) {
             const key = e.key;
-            if (key.startsWith('Arrow')) { e.preventDefault();
+            if (key.startsWith('Arrow')) {
+                e.preventDefault();
                 switch(key) {
                     case 'ArrowUp': movePlayer(0, -1); break;
                     case 'ArrowDown': movePlayer(0, 1); break;
@@ -2571,10 +2360,16 @@
         }
     });
 
-    // ========== INIT ==========
     window.onload = function() {
         populateSaveList();
-        goHub(); // start at hub
+        document.getElementById('hub-name').innerText = player.name;
+        document.getElementById('hub-lvl').innerText = player.level;
+        document.getElementById('hub-coins').innerText = player.coins;
+        document.getElementById('hub-berries').innerText = player.berries;
+        
+        // Set battle UI with correct facing
+        document.getElementById('player-sprite').innerHTML = `<img src="${player.avatar}" style="max-height:200px; max-width:200px; object-fit:contain; transform:scaleX(1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🧙‍♂️'">`;
+        document.getElementById('enemy-sprite').innerHTML = `<img src="${enemy.img}" style="max-height:220px; max-width:220px; object-fit:contain; transform:scaleX(-1);" onerror="this.onerror=null; this.src=''; this.outerHTML='🪨'">`;
     };
 </script>
 </body>
